@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBD Hardware B2B AI System V1.0</title>
+<style>
+  :root{
+    --bg:#eef1f6; --side:#0f1b2d; --side2:#16263c; --card:#ffffff;
+    --ink:#1f2937; --muted:#6b7280; --line:#e3e8ef;
+    --primary:#f5a623; --primary-d:#d98e0d; --accent:#2563eb;
+    --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --soft:#f3f6fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+    background:var(--bg);color:var(--ink);font-size:14px;display:flex;}
+  /* ---------- 侧边栏 ---------- */
+  .sidebar{width:232px;background:linear-gradient(180deg,var(--side),var(--side2));
+    color:#cdd6e4;display:flex;flex-direction:column;flex-shrink:0;}
+  .brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .brand .logo{display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:34px;height:34px;border-radius:8px;background:var(--primary);
+    color:#1a1a1a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .brand h1{font-size:14px;color:#fff;font-weight:700;line-height:1.3;}
+  .brand .sub{font-size:11px;color:#7c8aa0;margin-top:3px;letter-spacing:.5px;}
+  .nav{padding:12px 10px;flex:1;overflow:auto;}
+  .nav .group{font-size:11px;color:#5e6c80;padding:10px 12px 6px;letter-spacing:1px;}
+  .nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:8px;
+    color:#b9c4d4;cursor:pointer;margin-bottom:3px;text-decoration:none;font-size:13.5px;transition:.15s;}
+  .nav a .ico{width:18px;text-align:center;font-size:15px;opacity:.9;}
+  .nav a:hover{background:rgba(255,255,255,.06);color:#fff;}
+  .nav a.active{background:var(--primary);color:#1a1a1a;font-weight:600;}
+  .nav a .tag{margin-left:auto;font-size:10px;background:rgba(255,255,255,.15);
+    padding:1px 6px;border-radius:6px;color:#fff;}
+  .nav a.active .tag{background:rgba(0,0,0,.15);color:#1a1a1a;}
+  .side-foot{padding:14px 18px;font-size:11px;color:#5e6c80;border-top:1px solid rgba(255,255,255,.08);}
+  /* ---------- 主区 ---------- */
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{height:60px;background:var(--card);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;padding:0 22px;gap:16px;flex-shrink:0;}
+  .topbar h2{font-size:18px;font-weight:700;}
+  .topbar .crumb{font-size:12px;color:var(--muted);margin-top:2px;}
+  .topbar .spacer{flex:1;}
+  .topbar .search{flex:1;max-width:360px;position:relative;}
+  .topbar .search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);
+    border-radius:8px;font-size:13px;background:var(--soft);}
+  .topbar .search input:focus{outline:none;border-color:var(--accent);background:#fff;}
+  .topbar .search .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);}
+  .btn{padding:9px 16px;border:none;border-radius:8px;font-size:13px;cursor:pointer;
+    font-weight:600;transition:.15s;display:inline-flex;align-items:center;gap:6px;}
+  .btn-primary{background:var(--primary);color:#1a1a1a;}
+  .btn-primary:hover{background:var(--primary-d);}
+  .btn-ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line);}
+  .btn-ghost:hover{background:#e9eef6;}
+  .btn-danger{background:#fee2e2;color:var(--bad);}
+  .btn-danger:hover{background:#fecaca;}
+  .btn-sm{padding:5px 10px;font-size:12px;}
+  .content{padding:22px;overflow:auto;flex:1;}
+  /* ---------- 卡片/统计 ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .stat .k{font-size:12px;color:var(--muted);}
+  .stat .v{font-size:26px;font-weight:800;margin-top:6px;color:#0f1b2d;}
+  .stat .v small{font-size:13px;color:var(--muted);font-weight:600;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px;}
+  .panel h3{font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .panel h3 .dot{width:7px;height:7px;border-radius:50%;background:var(--primary);}
+  /* ---------- 表格 ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  th{background:var(--soft);color:var(--muted);font-weight:600;font-size:12px;white-space:nowrap;}
+  tbody tr:hover{background:#fafbfd;}
+  td .thumb{width:42px;height:42px;border-radius:6px;object-fit:cover;border:1px solid var(--line);background:#f0f2f5;}
+  .id-link{color:var(--accent);cursor:pointer;font-weight:600;text-decoration:none;}
+  .id-link:hover{text-decoration:underline;}
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .b-high{background:#dcfce7;color:var(--ok);}
+  .b-mid{background:#fef3c7;color:var(--warn);}
+  .b-low{background:#fee2e2;color:var(--bad);}
+  .b-full{background:#dbeafe;color:#1d4ed8;}
+  .b-part{background:#fef3c7;color:var(--warn);}
+  .b-none{background:#f1f5f9;color:var(--muted);}
+  .row-actions{display:flex;gap:6px;flex-wrap:wrap;}
+  .empty{padding:50px 20px;text-align:center;color:var(--muted);}
+  .empty .big{font-size:42px;margin-bottom:10px;}
+  /* ---------- 模态框 ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(15,27,45,.55);display:none;
+    align-items:flex-start;justify-content:center;padding:40px 16px;z-index:50;overflow:auto;}
+  .overlay.show{display:flex;}
+  .modal{background:#fff;border-radius:14px;width:100%;max-width:680px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+  .modal.wide{max-width:760px;}
+  .modal-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;}
+  .modal-head h3{font-size:17px;}
+  .modal-head .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:22px;line-height:1;}
+  .modal-body{padding:20px 22px;max-height:64vh;overflow:auto;}
+  .modal-foot{padding:14px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .field label .req{color:var(--bad);}
+  .field input,.field select,.field textarea{padding:9px 11px;border:1px solid var(--line);
+    border-radius:8px;font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);}
+  .field textarea{resize:vertical;min-height:62px;}
+  .field .hint{font-size:11px;color:var(--muted);}
+  .filebox{border:1.5px dashed var(--line);border-radius:8px;padding:12px;text-align:center;cursor:pointer;background:var(--soft);}
+  .filebox:hover{border-color:var(--accent);}
+  .filebox .pv{margin-top:8px;}
+  .filebox img{max-width:120px;max-height:120px;border-radius:6px;border:1px solid var(--line);}
+  .filebox .lnk{color:var(--accent);font-weight:600;}
+  /* ---------- 业务流 ---------- */
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .flow .step{background:var(--soft);border:1px solid var(--line);border-radius:20px;
+    padding:7px 14px;font-size:12.5px;color:var(--muted);}
+  .flow .step.on{background:var(--primary);color:#1a1a1a;font-weight:700;border-color:var(--primary);}
+  .flow .arr{color:var(--muted);font-size:12px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px;}
+  .bar-row .name{width:150px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .bar-track{flex:1;background:var(--soft);border-radius:6px;height:18px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#f7c66b);border-radius:6px;}
+  .bar-row .num{width:34px;text-align:right;color:var(--muted);}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#0f1b2d;color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;
+    opacity:0;transition:.25s;z-index:99;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .filterbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+  .filterbar select{padding:8px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fff;}
+  .chip{background:var(--primary);color:#1a1a1a;font-size:12px;font-weight:600;
+    padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;}
+  .chip button{background:none;border:none;cursor:pointer;font-size:13px;color:#1a1a1a;font-weight:800;}
+  .muted{color:var(--muted);}
+  .ph{text-align:center;padding:60px 20px;color:var(--muted);}
+  .ph .ic{font-size:46px;margin-bottom:12px;}
+  .ph h3{color:var(--ink);font-size:16px;margin-bottom:8px;}
+  .ph p{max-width:420px;margin:0 auto;line-height:1.7;font-size:13px;}
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-thumb{background:#c5cdd9;border-radius:6px;}
+</style>
+</head>
+<body>
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">
+        <div class="mark">TBD</div>
+        <div>
+          <h1>TBD Hardware B2B</h1>
+          <div class="sub">AI System V1.0</div>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="group">核心数据（第一阶段）</div>
+      <a data-view="dashboard"><span class="ico">▦</span>数据看板</a>
+      <a data-view="factory" class="active"><span class="ico">🏭</span>工厂管理<span class="tag">核心</span></a>
+      <a data-view="product"><span class="ico">📦</span>产品池<span class="tag">核心</span></a>
+      <div class="group">业务流（第二阶段）</div>
+      <a data-view="featured"><span class="ico">⭐</span>主推产品</a>
+      <a data-view="kb"><span class="ico">📚</span>产品知识库</a>
+      <a data-view="dev"><span class="ico">🎯</span>客户开发</a>
+      <a data-view="crm"><span class="ico">👥</span>客户CRM</a>
+      <a data-view="task"><span class="ico">✓</span>跟进任务</a>
+    </nav>
+    <div class="side-foot" id="syncFoot">☁ 本地模式<br>Phase 1 · 工厂 & 产品池</div>
+  </aside>
+
+  <!-- 主区 -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h2 id="pageTitle">工厂管理</h2>
+        <div class="crumb" id="pageCrumb">管理供应商工厂资源</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="search">
+        <span class="si">🔍</span>
+        <input id="globalSearch" placeholder="搜索工厂 / 产品（名称、编号、联系人…）">
+      </div>
+      <button class="btn btn-primary" id="addBtn">＋ 新增</button>
+    </div>
+    <div class="content" id="content"></div>
+  </main>
+
+  <!-- 模态框 -->
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   TBD Hardware B2B AI System V1.0 —— 本地存储层
+   ============================================================ */
+const LS_F = "tbd_factories_v1";
+const LS_P = "tbd_products_v1";
+
+function loadFactories(){ try{return JSON.parse(localStorage.getItem(LS_F))||[];}catch(e){return [];} }
+function saveFactories(a){ localStorage.setItem(LS_F, JSON.stringify(a)); }
+function loadProducts(){ try{return JSON.parse(localStorage.getItem(LS_P))||[];}catch(e){return [];} }
+function saveProducts(a){ localStorage.setItem(LS_P, JSON.stringify(a)); }
+
+/* 编号生成：Supplier ID = S001，Product ID = P0001 */
+function nextSupplierId(){
+  const arr = loadFactories();
+  let max = 0;
+  arr.forEach(f=>{ const m=/^S(\d+)$/.exec(f.supplierId); if(m) max=Math.max(max, +m[1]); });
+  return "S" + String(max+1).padStart(3,"0");
+}
+function nextProductId(){
+  const arr = loadProducts();
+  let max = 0;
+  arr.forEach(p=>{ const m=/^P(\d+)$/.exec(p.productId); if(m) max=Math.max(max, +m[1]); });
+  return "P" + String(max+1).padStart(4,"0");
+}
+function productsOf(supplierId){ return loadProducts().filter(p=>p.supplierId===supplierId); }
+function getFactory(id){ return loadFactories().find(f=>f.supplierId===id); }
+
+/* 首次进入植入示例数据，演示 S001 → P0001/P0002/P0003 */
+function seedIfEmpty(){
+  if(localStorage.getItem(LS_F)===null){
+    saveFactories([
+      {supplierId:"S001",name:"宁波恒力五金制造厂",contact:"张伟",phone:"13805748888",
+       category:"铰链 / 滑轨 / 合页",products:"重型铰链、阻尼滑轨、柜门合页、不锈钢配件",
+       advantage:"20年五金生产经验，交期稳定，支持小批量定制打样",market:"北美 / 欧洲 / 东南亚",
+       cooperation:"高",support:"完整",lastContact:"2026-09-15"},
+      {supplierId:"S002",name:"东莞精密压铸有限公司",contact:"李娜",phone:"0769-88990012",
+       category:"铝合金 / 锌合金压铸件",products:"铝合金压铸件、散热器外壳、结构件",
+       advantage:"CNC+压铸一体，公差控制±0.02mm，有自有模具车间",market:"北美 / 日本",
+       cooperation:"中",support:"部分",lastContact:"2026-09-10"},
+      {supplierId:"S003",name:"佛山顺德钣金加工厂",contact:"陈强",phone:"18902887766",
+       category:"钣金 / 机箱机柜",products:"控制箱、机柜、钣金外壳、激光切割件",
+       advantage:"激光切割+折弯柔性产线，48小时出样",market:"中东 / 欧洲",
+       cooperation:"高",support:"完整",lastContact:"2026-09-18"}
+    ]);
+    saveProducts([
+      {productId:"P0001",supplierId:"S001",image:null,name:"重型柜门铰链",model:"HL-200",
+       size:"200×50×3mm",material:"304不锈钢",surface:"镀锌",market:"北美",moq:"500",priceRange:"$1.2-1.8/只",drawing:null},
+      {productId:"P0002",supplierId:"S001",image:null,name:"三节阻尼滑轨",model:"SL-300",
+       size:"300mm",material:"冷轧钢",surface:"电泳黑",market:"欧洲",moq:"1000",priceRange:"$0.9-1.4/副",drawing:null},
+      {productId:"P0003",supplierId:"S001",image:null,name:"隐藏式合页",model:"HN-100",
+       size:"100×35mm",material:"锌合金",surface:"镀镍",market:"东南亚",moq:"800",priceRange:"$0.6-0.9/只",drawing:null},
+      {productId:"P0004",supplierId:"S002",image:null,name:"铝合金压铸外壳",model:"AZ-001",
+       size:"120×80×40mm",material:"ADC12",surface:"喷砂阳极",market:"北美",moq:"300",priceRange:"$2.5-3.5/件",drawing:null},
+      {productId:"P0005",supplierId:"S003",image:null,name:"控制箱钣金外壳",model:"BX-220",
+       size:"400×300×200mm",material:"SPCC",surface:"粉末喷涂",market:"欧洲",moq:"200",priceRange:"$8-12/件",drawing:null}
+    ]);
+  }
+}
+seedIfEmpty(); // 本地首次进入种入示例（已在底部启动时统一调用）
+
+/* ============================================================
+   云端同步层（服务器为唯一真相源，支持跨设备）
+   —— 浏览器本地 localStorage 仍作为缓存，保证离线可用；
+      每次改动推送到服务器，任何设备打开都先从服务器拉回最新数据。
+   ============================================================ */
+async function pushSnapshot(){
+  try{
+    const body={factories:loadFactories(),products:loadProducts()};
+    const r=await fetch("/api/snapshot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    if(r.ok) setSync("cloud"); else setSync("error");
+  }catch(e){ setSync("offline"); }
+}
+async function pullSnapshot(){
+  try{
+    const r=await fetch("/api/snapshot"); const d=await r.json();
+    if(d && Array.isArray(d.factories) && (d.factories.length||d.products.length)){
+      saveFactories(d.factories); saveProducts(d.products); setSync("cloud");
+    }else{
+      await pushSnapshot(); // 服务器为空，用本地数据种入
+    }
+  }catch(e){ setSync("offline"); }
+}
+function setSync(mode){
+  const f=$("#syncFoot"); if(!f) return;
+  if(mode==="cloud")   f.innerHTML="☁ 云端已同步<br>Phase 1 · 工厂 & 产品池";
+  else if(mode==="offline") f.innerHTML="⚠ 离线（本地已存）<br>Phase 1 · 工厂 & 产品池";
+  else f.innerHTML="⚠ 同步异常<br>Phase 1 · 工厂 & 产品池";
+}
+
+/* ============================================================
+   全局状态
+   ============================================================ */
+let state = { view:"factory", search:"", supplierFilter:null, factoryFocus:null };
+let form = {};   // 新增/编辑时的临时表单数据
+
+/* ============================================================
+   工具函数
+   ============================================================ */
+function $(s,r=document){return r.querySelector(s);}
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1800);}
+
+/* 图片压缩：绘制到 canvas 后导出，控制体积 */
+function compressFile(file, maxDim, cb){
+  if(!file) return cb(null);
+  if(file.type==="application/pdf"){
+    const r=new FileReader(); r.onload=e=>cb({kind:"pdf",data:e.target.result,name:file.name}); r.readAsDataURL(file); return;
+  }
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height;
+      if(w>h && w>maxDim){h=Math.round(h*maxDim/w);w=maxDim;}
+      else if(h>maxDim){w=Math.round(w*maxDim/h);h=maxDim;}
+      const c=document.createElement("canvas");c.width=w;c.height=h;
+      c.getContext("2d").drawImage(img,0,0,w,h);
+      cb({kind:"img",data:c.toDataURL("image/jpeg",0.7),name:file.name});
+    };
+    img.onerror=()=>cb(null);
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+function badgeCoop(v){const m={"高":["b-high","高"],"中":["b-mid","中"],"低":["b-low","低"]};const x=m[v]||["b-none",v||"—"];return `<span class="badge ${x[0]}">${esc(x[1])}</span>`;}
+function badgeSupport(v){const m={"完整":["b-full","完整"],"部分":["b-part","部分"],"无":["b-none","无"]};const x=m[v]||["b-none",v||"—"];return `<span class="badge ${x[0]}">${esc(x[1])}</span>`;}
+
+/* ============================================================
+   导航 / 渲染入口
+   ============================================================ */
+const TITLES={
+  dashboard:["数据看板","全局统计与业务流概览"],
+  factory:["工厂管理","管理供应商工厂资源（11 字段）"],
+  product:["产品池","管理全部产品与图纸（12 字段）"],
+  featured:["主推产品","第二阶段建设中"],
+  kb:["产品知识库","第二阶段建设中"],
+  dev:["客户开发","第二阶段建设中"],
+  crm:["客户CRM","第二阶段建设中"],
+  task:["跟进任务","第二阶段建设中"]
+};
+function go(view,opts={}){
+  state.view=view;
+  state.supplierFilter = opts.supplierFilter ?? null;
+  state.factoryFocus   = opts.factoryFocus ?? null;
+  if(opts.search!==undefined) state.search=opts.search;
+  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("active",a.dataset.view===view));
+  $("#pageTitle").textContent=TITLES[view][0];
+  $("#pageCrumb").textContent=TITLES[view][1];
+  $("#addBtn").style.display = (view==="factory"||view==="product")?"inline-flex":"none";
+  render();
+}
+document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>go(a.dataset.view)));
+
+document.getElementById("globalSearch").addEventListener("input",e=>{
+  state.search=e.target.value;
+  if(state.view!=="factory"&&state.view!=="product") go(state.view==="dashboard"?"factory":"product");
+  render();
+});
+$("#addBtn").addEventListener("click",()=>{
+  if(state.view==="factory") openFactoryModal(null);
+  if(state.view==="product") openProductModal(null);
+});
+
+/* ============================================================
+   渲染：各视图
+   ============================================================ */
+function render(){
+  const c=$("#content");
+  if(state.view==="dashboard") return renderDashboard(c);
+  if(state.view==="factory")   return renderFactory(c);
+  if(state.view==="product")   return renderProduct(c);
+  return renderPlaceholder(c,state.view);
+}
+
+/* ---------- 数据看板 ---------- */
+function renderDashboard(c){
+  const F=loadFactories(), P=loadProducts();
+  const avg = F.length? (P.length/F.length).toFixed(1):"0";
+  const highCoop = F.filter(f=>f.cooperation==="高").length;
+  const recent = [...F].sort((a,b)=>(b.lastContact||"").localeCompare(a.lastContact||"")).slice(0,1)[0];
+  c.innerHTML="";
+  const stats=el("div","stats");
+  stats.innerHTML=`
+    <div class="stat"><div class="k">工厂总数</div><div class="v">${F.length}<small> 家</small></div></div>
+    <div class="stat"><div class="k">产品总数</div><div class="v">${P.length}<small> 个</small></div></div>
+    <div class="stat"><div class="k">厂均产品数</div><div class="v">${avg}<small> 个/厂</small></div></div>
+    <div class="stat"><div class="k">高配合度工厂</div><div class="v">${highCoop}<small> 家</small></div></div>
+    <div class="stat"><div class="k">最近沟通</div><div class="v" style="font-size:16px;line-height:1.4;margin-top:10px">${recent?esc(recent.name):"—"}<br><small>${recent?esc(recent.lastContact):""}</small></div></div>`;
+  c.appendChild(stats);
+
+  // 产品分布（按工厂）
+  const panel1=el("div","panel");
+  panel1.innerHTML=`<h3><span class="dot"></span>各工厂产品分布</h3>`;
+  const rows=el("div");
+  const maxc=Math.max(1,...F.map(f=>productsOf(f.supplierId).length));
+  F.forEach(f=>{
+    const n=productsOf(f.supplierId).length;
+    const r=el("div","bar-row");
+    r.innerHTML=`<div class="name" title="${esc(f.name)}">${esc(f.supplierId)} · ${esc(f.name)}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,n/maxc*100)}%"></div></div>
+      <div class="num">${n}</div>`;
+    rows.appendChild(r);
+  });
+  if(!F.length) rows.innerHTML=`<div class="muted">暂无工厂数据，请先到「工厂管理」添加。</div>`;
+  panel1.appendChild(rows);
+  c.appendChild(panel1);
+
+  // 业务逻辑流
+  const panel2=el("div","panel");
+  panel2.innerHTML=`<h3><span class="dot"></span>业务逻辑流（全局路线图）</h3>`;
+  const flow=el("div","flow");
+  const steps=[
+    ["工厂管理",1],["产品池",1],["主推产品",0],["产品知识库",0],["找目标客户",0],
+    ["AI背调",0],["AI匹配产品",0],["找决策人",0],["CRM",0],["个性化开发",0],
+    ["跟进",0],["客户回复",0],["Linda处理",0]
+  ];
+  steps.forEach((s,i)=>{
+    const d=el("div","step"+(s[1]?" on":""),esc(s[0]));
+    flow.appendChild(d);
+    if(i<steps.length-1) flow.appendChild(el("span","arr","→"));
+  });
+  panel2.appendChild(flow);
+  const note=el("p","muted");
+  note.style.marginTop="14px";note.style.fontSize="12.5px";
+  note.innerHTML=`当前 <b style="color:var(--ink)">Phase 1</b> 已打通「工厂管理」「产品池」两个核心数据库，并实现工厂↔产品的双向联动。后续业务流将在第二阶段依次开启。`;
+  panel2.appendChild(note);
+  c.appendChild(panel2);
+
+  // 数据备份
+  const panel3=el("div","panel");
+  panel3.innerHTML=`<h3><span class="dot"></span>数据备份 / 恢复</h3>`;
+  const bar=el("div"); bar.style.display="flex";bar.style.gap="10px";bar.style.flexWrap="wrap";
+  const exp=el("button","btn btn-ghost","⬇ 导出全部数据 (JSON)");
+  exp.onclick=exportData;
+  const imp=el("button","btn btn-ghost","⬆ 导入数据 (JSON)");
+  imp.onclick=()=>{const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);};i.click();};
+  bar.appendChild(exp);bar.appendChild(imp);
+  panel3.appendChild(bar);
+  const hint=el("p","muted");hint.style.marginTop="10px";hint.style.fontSize="12px";
+  hint.textContent="数据已自动同步至服务器，可在任意设备打开网页访问。导出 JSON 作为额外离线备份，建议定期保存一份。";
+  panel3.appendChild(hint);
+  c.appendChild(panel3);
+}
+
+/* ---------- 工厂管理 ---------- */
+function renderFactory(c){
+  let list=loadFactories();
+  if(state.factoryFocus){ // 来自产品点击 Supplier ID 的聚焦
+    list=list.filter(f=>f.supplierId===state.factoryFocus);
+  }
+  const q=state.search.trim().toLowerCase();
+  if(q) list=list.filter(f=>[f.supplierId,f.name,f.contact,f.phone,f.category,f.market,f.products].join(" ").toLowerCase().includes(q));
+
+  c.innerHTML="";
+  // 筛选条
+  const fb=el("div","filterbar");
+  if(state.factoryFocus){
+    const f=getFactory(state.factoryFocus);
+    fb.innerHTML=`<span class="chip">已定位工厂：${esc(state.factoryFocus)} ${esc(f?f.name:"")} <button onclick="clearFactoryFocus()">✕</button></span>`;
+  }
+  fb.innerHTML+=`<span class="muted" style="margin-left:auto">共 ${list.length} 家工厂</span>`;
+  c.appendChild(fb);
+
+  if(!list.length){
+    c.appendChild(emptyState("🏭","暂无工厂","点击右上角「＋ 新增」添加第一家工厂，或从产品池点击 Supplier ID 定位。"));
+    return;
+  }
+  const tbl=el("table");
+  tbl.innerHTML=`<thead><tr>
+    <th>Supplier ID</th><th>工厂名称</th><th>联系人</th><th>联系方式</th><th>产品大类</th>
+    <th>核心优势</th><th>主要市场</th><th>配合度</th><th>资料支持</th><th>最近沟通</th>
+    <th>关联产品</th><th>操作</th></tr></thead>`;
+  const tb=el("tbody");
+  list.forEach(f=>{
+    const n=productsOf(f.supplierId).length;
+    const tr=el("tr");
+    tr.innerHTML=`
+      <td><b>${esc(f.supplierId)}</b></td>
+      <td>${esc(f.name)}</td>
+      <td>${esc(f.contact||"—")}</td>
+      <td>${esc(f.phone||"—")}</td>
+      <td>${esc(f.category||"—")}</td>
+      <td style="max-width:200px;color:var(--muted)">${esc(f.advantage||"—")}</td>
+      <td>${esc(f.market||"—")}</td>
+      <td>${badgeCoop(f.cooperation)}</td>
+      <td>${badgeSupport(f.support)}</td>
+      <td>${esc(f.lastContact||"—")}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="viewProducts('${f.supplierId}')">查看产品 (${n})</button></td>
+      <td><div class="row-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openFactoryModal('${f.supplierId}')">编辑</button>
+        <button class="btn btn-danger btn-sm" onclick="delFactory('${f.supplierId}')">删除</button>
+      </div></td>`;
+    tb.appendChild(tr);
+  });
+  tbl.appendChild(tb);
+  c.appendChild(tbl);
+}
+function clearFactoryFocus(){ state.factoryFocus=null; render(); }
+
+function viewProducts(sid){
+  go("product",{supplierFilter:sid});
+}
+
+/* ---------- 产品池 ---------- */
+function renderProduct(c){
+  let list=loadProducts();
+  if(state.supplierFilter) list=list.filter(p=>p.supplierId===state.supplierFilter);
+  const q=state.search.trim().toLowerCase();
+  if(q) list=list.filter(p=>[p.productId,p.supplierId,p.name,p.model,p.material,p.market,p.size].join(" ").toLowerCase().includes(q));
+
+  c.innerHTML="";
+  const fb=el("div","filterbar");
+  const optHtml=`<option value="">全部供应商</option>`+loadFactories().map(f=>`<option value="${esc(f.supplierId)}" ${state.supplierFilter===f.supplierId?"selected":""}>${esc(f.supplierId)} · ${esc(f.name)}</option>`).join("");
+  let chipHtml="";
+  if(state.supplierFilter){
+    const f=getFactory(state.supplierFilter);
+    chipHtml=`<span class="chip">来自工厂：${esc(state.supplierFilter)} ${esc(f?f.name:"")} <button onclick="clearSupplierFilter()">✕</button></span>`;
+  }
+  fb.innerHTML=`<select id="supFilter">${optHtml}</select>${chipHtml}<span class="muted" style="margin-left:auto">共 ${list.length} 个产品</span>`;
+  fb.querySelector("#supFilter").onchange=e=>{state.supplierFilter=e.target.value||null;render();};
+  c.appendChild(fb);
+
+  if(!list.length){
+    c.appendChild(emptyState("📦","暂无产品","点击右上角「＋ 新增」添加产品，并关联已有工厂 Supplier ID。"));
+    return;
+  }
+  const tbl=el("table");
+  tbl.innerHTML=`<thead><tr>
+    <th>产品图片</th><th>Product ID</th><th>Supplier ID</th><th>产品名</th><th>型号</th>
+    <th>尺寸</th><th>材质</th><th>表面处理</th><th>主要市场</th><th>MOQ</th><th>价格范围</th><th>图纸</th>
+    <th>操作</th></tr></thead>`;
+  const tb=el("tbody");
+  list.forEach(p=>{
+    const tr=el("tr");
+    const imgCell = p.image ? `<img class="thumb" src="${p.image.data}" alt="">` : `<div class="thumb" style="display:flex;align-items:center;justify-content:center;color:#c5cdd9">无图</div>`;
+    const drawCell = p.drawing ? (p.drawing.kind==="pdf"
+        ? `<a class="id-link" href="${p.drawing.data}" target="_blank">📄 查看</a>`
+        : `<a class="id-link" href="${p.drawing.data}" target="_blank">🖼 查看</a>`) : `<span class="muted">—</span>`;
+    tr.innerHTML=`
+      <td>${imgCell}</td>
+      <td><b>${esc(p.productId)}</b></td>
+      <td><a class="id-link" onclick="focusFactory('${p.supplierId}')">${esc(p.supplierId)}</a></td>
+      <td>${esc(p.name)}</td>
+      <td>${esc(p.model||"—")}</td>
+      <td>${esc(p.size||"—")}</td>
+      <td>${esc(p.material||"—")}</td>
+      <td>${esc(p.surface||"—")}</td>
+      <td>${esc(p.market||"—")}</td>
+      <td>${esc(p.moq||"—")}</td>
+      <td>${esc(p.priceRange||"—")}</td>
+      <td>${drawCell}</td>
+      <td><div class="row-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openProductModal('${p.productId}')">编辑</button>
+        <button class="btn btn-danger btn-sm" onclick="delProduct('${p.productId}')">删除</button>
+      </div></td>`;
+    tb.appendChild(tr);
+  });
+  tbl.appendChild(tb);
+  c.appendChild(tbl);
+}
+function clearSupplierFilter(){ state.supplierFilter=null; render(); }
+function focusFactory(sid){ go("factory",{factoryFocus:sid}); }
+
+/* ---------- 占位 ---------- */
+function renderPlaceholder(c,view){
+  const map={
+    featured:["⭐","主推产品","从产品池中挑出主推款，配置主推理由与卖点话术。第二阶段开启。"],
+    kb:["📚","产品知识库","沉淀每个产品的技术参数、FAQ、竞品对比，供 AI 调用。第二阶段开启。"],
+    dev:["🎯","客户开发","基于产品匹配目标客户画像，进入「找目标客户 → AI背调 → AI匹配产品 → 找决策人」。第二阶段开启。"],
+    crm:["👥","客户CRM","管理客户全生命周期：个性化开发 → 跟进 → 客户回复 → Linda处理。第二阶段开启。"],
+    task:["✓","跟进任务","把跟进动作拆解成待办，按客户阶段与优先级排程。第二阶段开启。"]
+  };
+  const m=map[view];
+  c.innerHTML="";
+  const p=el("div","ph");
+  p.innerHTML=`<div class="ic">${m[0]}</div><h3>${m[1]}</h3><p>${m[2]}</p>`;
+  c.appendChild(p);
+}
+function emptyState(ic,t,sub){
+  const d=el("div","empty");d.innerHTML=`<div class="big">${ic}</div><div style="font-size:15px;color:var(--ink);font-weight:600">${t}</div><div style="margin-top:6px">${sub}</div>`;return d;
+}
+
+/* ============================================================
+   工厂 新增/编辑 模态
+   ============================================================ */
+function openFactoryModal(id){
+  const editing = id? getFactory(id):null;
+  form = editing? {...editing} : {supplierId:nextSupplierId()};
+  const m=$("#modal"); m.className="modal";
+  m.innerHTML=`
+    <div class="modal-head"><h3>${editing?"编辑工厂":"新增工厂"}</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="field"><label>Supplier ID（系统编号）</label><input id="f_sid" value="${esc(form.supplierId)}" ${editing?"readonly":""}></div>
+        <div class="field"><label>工厂名称 <span class="req">*</span></label><input id="f_name" value="${esc(form.name||"")}" placeholder="如：宁波恒力五金制造厂"></div>
+        <div class="field"><label>联系人</label><input id="f_contact" value="${esc(form.contact||"")}"></div>
+        <div class="field"><label>联系方式</label><input id="f_phone" value="${esc(form.phone||"")}" placeholder="手机 / 电话"></div>
+        <div class="field"><label>产品大类</label><input id="f_cat" value="${esc(form.category||"")}" placeholder="如：铰链 / 滑轨"></div>
+        <div class="field"><label>主要市场</label><input id="f_market" value="${esc(form.market||"")}" placeholder="如：北美 / 欧洲"></div>
+        <div class="field"><label>配合度</label><select id="f_coop">
+          ${["高","中","低"].map(v=>`<option ${form.cooperation===v?"selected":""}>${v}</option>`).join("")}</select></div>
+        <div class="field"><label>资料支持</label><select id="f_sup">
+          ${["完整","部分","无"].map(v=>`<option ${form.support===v?"selected":""}>${v}</option>`).join("")}</select></div>
+        <div class="field"><label>最近沟通日期</label><input id="f_date" type="date" value="${esc(form.lastContact||"")}"></div>
+        <div class="field full"><label>可生产产品</label><textarea id="f_prod" placeholder="该工厂能做的产品清单">${esc(form.products||"")}</textarea></div>
+        <div class="field full"><label>核心优势</label><textarea id="f_adv" placeholder="交期、质量、定制能力、认证等">${esc(form.advantage||"")}</textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveFactory()">${editing?"保存修改":"创建工厂"}</button>
+    </div>`;
+  showModal();
+}
+function saveFactory(){
+  const name=$("#f_name").value.trim();
+  if(!name){ toast("请填写工厂名称"); return; }
+  const data={
+    supplierId:$("#f_sid").value.trim(),
+    name, contact:$("#f_contact").value.trim(), phone:$("#f_phone").value.trim(),
+    category:$("#f_cat").value.trim(), market:$("#f_market").value.trim(),
+    cooperation:$("#f_coop").value, support:$("#f_sup").value,
+    lastContact:$("#f_date").value, products:$("#f_prod").value.trim(), advantage:$("#f_adv").value.trim()
+  };
+  let arr=loadFactories();
+  const i=arr.findIndex(f=>f.supplierId===data.supplierId);
+  if(i>=0) arr[i]=data; else arr.push(data);
+  saveFactories(arr);
+  closeModal(); toast(i>=0?"工厂已更新":"工厂已创建："+data.supplierId); pushSnapshot(); render();
+}
+function delFactory(id){
+  const n=productsOf(id).length;
+  confirmBox(`确定删除工厂 <b>${id}</b> 吗？${n?`<br><span style="color:var(--bad)">该工厂下还有 ${n} 个产品，删除工厂不会自动删除产品（其 Supplier ID 将变成失效关联）。</span>`:""}`,()=>{
+    saveFactories(loadFactories().filter(f=>f.supplierId!==id));
+    closeModal(); toast("工厂已删除"); pushSnapshot(); render();
+  });
+}
+
+/* ============================================================
+   产品 新增/编辑 模态
+   ============================================================ */
+function openProductModal(id){
+  const editing = id? loadProducts().find(p=>p.productId===id):null;
+  form = editing? {...editing} : {productId:nextProductId(), image:null, drawing:null};
+  const factories=loadFactories();
+  if(!factories.length){ toast("请先到「工厂管理」添加至少一家工厂"); return; }
+  const m=$("#modal"); m.className="modal wide";
+  const imgPrev = form.image ? `<img src="${form.image.data}">` : `<span class="muted">未上传</span>`;
+  const drawPrev = form.drawing ? (form.drawing.kind==="pdf"?`<span class="lnk">📄 ${esc(form.drawing.name)}</span>`:`<img src="${form.drawing.data}">`) : `<span class="muted">未上传</span>`;
+  m.innerHTML=`
+    <div class="modal-head"><h3>${editing?"编辑产品":"新增产品"}</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="field"><label>Product ID（系统编号）</label><input id="p_pid" value="${esc(form.productId)}" ${editing?"readonly":""}></div>
+        <div class="field"><label>Supplier ID（关联工厂）<span class="req">*</span></label><select id="p_sid">
+          ${factories.map(f=>`<option value="${esc(f.supplierId)}" ${(form.supplierId||factories[0].supplierId)===f.supplierId?"selected":""}>${esc(f.supplierId)} · ${esc(f.name)}</option>`).join("")}</select></div>
+        <div class="field"><label>产品名 <span class="req">*</span></label><input id="p_name" value="${esc(form.name||"")}" placeholder="如：重型柜门铰链"></div>
+        <div class="field"><label>型号</label><input id="p_model" value="${esc(form.model||"")}" placeholder="如：HL-200"></div>
+        <div class="field"><label>尺寸</label><input id="p_size" value="${esc(form.size||"")}" placeholder="如：200×50×3mm"></div>
+        <div class="field"><label>材质</label><input id="p_material" value="${esc(form.material||"")}" placeholder="如：304不锈钢"></div>
+        <div class="field"><label>表面处理</label><input id="p_surface" value="${esc(form.surface||"")}" placeholder="如：镀锌"></div>
+        <div class="field"><label>主要市场</label><input id="p_market" value="${esc(form.market||"")}" placeholder="如：北美"></div>
+        <div class="field"><label>MOQ</label><input id="p_moq" value="${esc(form.moq||"")}" placeholder="如：500"></div>
+        <div class="field"><label>价格范围</label><input id="p_price" value="${esc(form.priceRange||"")}" placeholder="如：$1.2-1.8/只"></div>
+        <div class="field full"><label>产品图片（自动压缩）</label>
+          <div class="filebox" onclick="pickImg()">点击上传图片<div class="pv" id="imgPrev">${imgPrev}</div></div>
+          <input type="file" id="p_img" accept="image/*" style="display:none"></div>
+        <div class="field full"><label>图纸（图片 / PDF）</label>
+          <div class="filebox" onclick="pickDraw()">点击上传图纸<div class="pv" id="drawPrev">${drawPrev}</div></div>
+          <input type="file" id="p_draw" accept="image/*,application/pdf" style="display:none"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveProduct()">${editing?"保存修改":"创建产品"}</button>
+    </div>`;
+  showModal();
+  // 绑定文件输入
+  $("#p_img").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;compressFile(f,1000,r=>{form.image=r;if(r)$("#imgPrev").innerHTML=r.kind==="pdf"?`<span class="lnk">📄 ${esc(r.name)}</span>`:`<img src="${r.data}">`;});});
+  $("#p_draw").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;compressFile(f,1200,r=>{form.drawing=r;if(r)$("#drawPrev").innerHTML=r.kind==="pdf"?`<span class="lnk">📄 ${esc(r.name)}</span>`:`<img src="${r.data}">`;});});
+}
+function pickImg(){ $("#p_img").click(); }
+function pickDraw(){ $("#p_draw").click(); }
+function saveProduct(){
+  const name=$("#p_name").value.trim();
+  const sid=$("#p_sid").value;
+  if(!name){ toast("请填写产品名"); return; }
+  if(!sid){ toast("请选择关联工厂"); return; }
+  const data={
+    productId:$("#p_pid").value.trim(), supplierId:sid, name,
+    model:$("#p_model").value.trim(), size:$("#p_size").value.trim(),
+    material:$("#p_material").value.trim(), surface:$("#p_surface").value.trim(),
+    market:$("#p_market").value.trim(), moq:$("#p_moq").value.trim(), priceRange:$("#p_price").value.trim(),
+    image:form.image||null, drawing:form.drawing||null
+  };
+  let arr=loadProducts();
+  const i=arr.findIndex(p=>p.productId===data.productId);
+  if(i>=0) arr[i]=data; else arr.push(data);
+  saveProducts(arr);
+  closeModal(); toast(i>=0?"产品已更新":"产品已创建："+data.productId); pushSnapshot(); render();
+}
+function delProduct(id){
+  confirmBox(`确定删除产品 <b>${id}</b> 吗？`,()=>{
+    saveProducts(loadProducts().filter(p=>p.productId!==id));
+    closeModal(); toast("产品已删除"); pushSnapshot(); render();
+  });
+}
+
+/* ============================================================
+   模态框 / 确认框 基础
+   ============================================================ */
+function showModal(){ $("#overlay").classList.add("show"); }
+function closeModal(){ $("#overlay").classList.remove("show"); }
+$("#overlay").addEventListener("click",e=>{ if(e.target.id==="overlay") closeModal(); });
+function confirmBox(html,onYes){
+  const m=$("#modal"); m.className="modal";
+  m.innerHTML=`<div class="modal-head"><h3>请确认</h3><span class="x" onclick="closeModal()">×</span></div>
+    <div class="modal-body" style="font-size:14px;line-height:1.7">${html}</div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">取消</button>
+    <button class="btn btn-danger" id="cfmYes">确认删除</button></div>`;
+  showModal();
+  $("#cfmYes").onclick=onYes;
+}
+
+/* ============================================================
+   导入 / 导出
+   ============================================================ */
+function exportData(){
+  const data={factories:loadFactories(),products:loadProducts(),_export:"TBD Hardware B2B AI System V1.0",_at:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="TBD_B2B_备份_"+new Date().toISOString().slice(0,10)+".json";a.click();
+  toast("数据已导出");
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=e=>{try{
+    const d=JSON.parse(e.target.result);
+    if(!d.factories||!d.products) throw 0;
+    if(!confirm("导入将覆盖当前全部工厂与产品数据，确定继续？")) return;
+    saveFactories(d.factories); saveProducts(d.products);
+    toast("导入成功"); pushSnapshot(); render();
+  }catch(err){ toast("文件格式不正确"); }};
+  r.readAsText(file);
+}
+
+/* 启动：先本地种入示例，再与云端同步（服务器为唯一真相源，跨设备一致） */
+seedIfEmpty();
+(async()=>{ await pullSnapshot(); go("factory"); })();
+</script>
+</body>
+</html>
