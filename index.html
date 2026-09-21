@@ -3,52 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TBD Hardware B2B AI System V1.0</title>
+<title>TBD Hardware B2B AI Customer Development System</title>
 <style>
   :root{
     --bg:#eef1f6; --side:#0f1b2d; --side2:#16263c; --card:#ffffff;
     --ink:#1f2937; --muted:#6b7280; --line:#e3e8ef;
     --primary:#f5a623; --primary-d:#d98e0d; --accent:#2563eb;
     --ok:#16a34a; --warn:#d97706; --bad:#dc2626; --soft:#f3f6fb;
+    --tbd:#94a3b8;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
   body{font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
-    background:var(--bg);color:var(--ink);font-size:14px;display:flex;}
+    background:var(--bg);color:var(--ink);font-size:14px;display:flex;overflow:hidden;}
   /* ---------- 侧边栏 ---------- */
-  .sidebar{width:232px;background:linear-gradient(180deg,var(--side),var(--side2));
+  .sidebar{width:236px;background:linear-gradient(180deg,var(--side),var(--side2));
     color:#cdd6e4;display:flex;flex-direction:column;flex-shrink:0;}
-  .brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .brand{padding:16px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);}
   .brand .logo{display:flex;align-items:center;gap:10px;}
   .brand .mark{width:34px;height:34px;border-radius:8px;background:var(--primary);
-    color:#1a1a1a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;}
-  .brand h1{font-size:14px;color:#fff;font-weight:700;line-height:1.3;}
-  .brand .sub{font-size:11px;color:#7c8aa0;margin-top:3px;letter-spacing:.5px;}
-  .nav{padding:12px 10px;flex:1;overflow:auto;}
-  .nav .group{font-size:11px;color:#5e6c80;padding:10px 12px 6px;letter-spacing:1px;}
-  .nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:8px;
-    color:#b9c4d4;cursor:pointer;margin-bottom:3px;text-decoration:none;font-size:13.5px;transition:.15s;}
-  .nav a .ico{width:18px;text-align:center;font-size:15px;opacity:.9;}
+    color:#1a1a1a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .brand h1{font-size:13px;color:#fff;font-weight:700;line-height:1.35;}
+  .brand .sub{font-size:10.5px;color:#7c8aa0;margin-top:3px;letter-spacing:.4px;}
+  .nav{padding:10px 10px;flex:1;overflow:auto;}
+  .nav .group{font-size:10.5px;color:#5e6c80;padding:10px 12px 6px;letter-spacing:1px;}
+  .nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+    color:#b9c4d4;cursor:pointer;margin-bottom:2px;text-decoration:none;font-size:13px;transition:.15s;}
+  .nav a .ico{width:18px;text-align:center;font-size:14px;opacity:.9;flex-shrink:0;}
   .nav a:hover{background:rgba(255,255,255,.06);color:#fff;}
   .nav a.active{background:var(--primary);color:#1a1a1a;font-weight:600;}
   .nav a .tag{margin-left:auto;font-size:10px;background:rgba(255,255,255,.15);
     padding:1px 6px;border-radius:6px;color:#fff;}
   .nav a.active .tag{background:rgba(0,0,0,.15);color:#1a1a1a;}
-  .side-foot{padding:14px 18px;font-size:11px;color:#5e6c80;border-top:1px solid rgba(255,255,255,.08);}
+  .nav .count{margin-left:auto;font-size:11px;color:#7c8aa0;}
+  .nav a.active .count{color:#1a1a1a;}
+  .side-foot{padding:12px 18px;font-size:10.5px;color:#5e6c80;border-top:1px solid rgba(255,255,255,.08);line-height:1.6;}
   /* ---------- 主区 ---------- */
   .main{flex:1;display:flex;flex-direction:column;min-width:0;}
-  .topbar{height:60px;background:var(--card);border-bottom:1px solid var(--line);
-    display:flex;align-items:center;padding:0 22px;gap:16px;flex-shrink:0;}
-  .topbar h2{font-size:18px;font-weight:700;}
-  .topbar .crumb{font-size:12px;color:var(--muted);margin-top:2px;}
+  .topbar{height:58px;background:var(--card);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;}
+  .topbar h2{font-size:17px;font-weight:700;}
+  .topbar .crumb{font-size:11.5px;color:var(--muted);margin-top:2px;}
   .topbar .spacer{flex:1;}
-  .topbar .search{flex:1;max-width:360px;position:relative;}
-  .topbar .search input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--line);
+  .search{flex:1;max-width:340px;position:relative;}
+  .search input{width:100%;padding:8px 12px 8px 32px;border:1px solid var(--line);
     border-radius:8px;font-size:13px;background:var(--soft);}
-  .topbar .search input:focus{outline:none;border-color:var(--accent);background:#fff;}
-  .topbar .search .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);}
-  .btn{padding:9px 16px;border:none;border-radius:8px;font-size:13px;cursor:pointer;
-    font-weight:600;transition:.15s;display:inline-flex;align-items:center;gap:6px;}
+  .search input:focus{outline:none;border-color:var(--accent);background:#fff;}
+  .search .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);}
+  .btn{padding:8px 14px;border:none;border-radius:8px;font-size:13px;cursor:pointer;
+    font-weight:600;transition:.15s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
   .btn-primary{background:var(--primary);color:#1a1a1a;}
   .btn-primary:hover{background:var(--primary-d);}
   .btn-ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line);}
@@ -56,127 +59,186 @@
   .btn-danger{background:#fee2e2;color:var(--bad);}
   .btn-danger:hover{background:#fecaca;}
   .btn-sm{padding:5px 10px;font-size:12px;}
-  .content{padding:22px;overflow:auto;flex:1;}
-  /* ---------- 卡片/统计 ---------- */
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:22px;}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
-  .stat .k{font-size:12px;color:var(--muted);}
-  .stat .v{font-size:26px;font-weight:800;margin-top:6px;color:#0f1b2d;}
-  .stat .v small{font-size:13px;color:var(--muted);font-weight:600;}
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px;}
-  .panel h3{font-size:15px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .content{padding:20px;overflow:auto;flex:1;}
+  /* ---------- 统计 / 面板 ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-bottom:18px;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.15s;}
+  .stat:hover{border-color:var(--primary);transform:translateY(-1px);}
+  .stat .k{font-size:11.5px;color:var(--muted);}
+  .stat .v{font-size:24px;font-weight:800;margin-top:5px;color:#0f1b2d;}
+  .stat .v small{font-size:12px;color:var(--muted);font-weight:600;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;}
+  .panel h3{font-size:14.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
   .panel h3 .dot{width:7px;height:7px;border-radius:50%;background:var(--primary);}
+  .panel h3 .r{margin-left:auto;font-size:12px;color:var(--muted);font-weight:400;}
+  /* 今日待办 */
+  .todos{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+  .todo{border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;background:var(--soft);transition:.15s;}
+  .todo:hover{border-color:var(--primary);background:#fff;}
+  .todo .n{font-size:24px;font-weight:800;color:#0f1b2d;}
+  .todo .t{font-size:12.5px;color:var(--ink);font-weight:600;margin-top:4px;}
+  .todo .d{font-size:11.5px;color:var(--muted);margin-top:4px;}
+  .todo.hot{border-color:var(--primary);background:#fff8ec;}
+  /* 漏斗 */
+  .funnel{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;}
+  .fstep{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:96px;text-align:center;}
+  .fstep .n{font-size:18px;font-weight:800;color:#0f1b2d;}
+  .fstep .t{font-size:11px;color:var(--muted);margin-top:2px;}
+  .fstep.on{background:#fff8ec;border-color:var(--primary);}
+  .farr{display:flex;align-items:center;color:var(--muted);font-size:12px;}
   /* ---------- 表格 ---------- */
+  .tablewrap{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:auto;}
   table{width:100%;border-collapse:collapse;font-size:13px;}
-  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle;}
-  th{background:var(--soft);color:var(--muted);font-weight:600;font-size:12px;white-space:nowrap;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap;}
+  th{background:var(--soft);color:var(--muted);font-weight:600;font-size:11.5px;}
   tbody tr:hover{background:#fafbfd;}
-  td .thumb{width:42px;height:42px;border-radius:6px;object-fit:cover;border:1px solid var(--line);background:#f0f2f5;}
+  td .thumb{width:38px;height:38px;border-radius:6px;object-fit:cover;border:1px solid var(--line);background:#f0f2f5;}
   .id-link{color:var(--accent);cursor:pointer;font-weight:600;text-decoration:none;}
   .id-link:hover{text-decoration:underline;}
-  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;}
-  .b-high{background:#dcfce7;color:var(--ok);}
-  .b-mid{background:#fef3c7;color:var(--warn);}
-  .b-low{background:#fee2e2;color:var(--bad);}
-  .b-full{background:#dbeafe;color:#1d4ed8;}
-  .b-part{background:#fef3c7;color:var(--warn);}
+  .row-title{cursor:pointer;color:var(--ink);}
+  .row-title:hover{color:var(--accent);}
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;}
+  .b-a,.b-高,.b-强,.b-是,.b-完整{background:#dcfce7;color:var(--ok);}
+  .b-b,.b-中,.b-部分{background:#fef3c7;color:var(--warn);}
+  .b-c,.b-低,.b-弱,.b-否,.b-缺失,.b-暂停{background:#fee2e2;color:var(--bad);}
+  .b-info{background:#dbeafe;color:#1d4ed8;}
   .b-none{background:#f1f5f9;color:var(--muted);}
+  .tbd{color:var(--tbd);font-style:italic;}
   .row-actions{display:flex;gap:6px;flex-wrap:wrap;}
-  .empty{padding:50px 20px;text-align:center;color:var(--muted);}
-  .empty .big{font-size:42px;margin-bottom:10px;}
+  .empty{padding:44px 20px;text-align:center;color:var(--muted);}
+  .empty .big{font-size:40px;margin-bottom:10px;}
+  .cmp-list{display:flex;gap:6px;flex-wrap:wrap;}
+  /* ---------- 工具栏 ---------- */
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .toolbar select,.toolbar input{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fff;}
+  .toolbar .cnt{margin-left:auto;font-size:12.5px;color:var(--muted);}
   /* ---------- 模态框 ---------- */
   .overlay{position:fixed;inset:0;background:rgba(15,27,45,.55);display:none;
-    align-items:flex-start;justify-content:center;padding:40px 16px;z-index:50;overflow:auto;}
+    align-items:flex-start;justify-content:center;padding:36px 14px;z-index:50;overflow:auto;}
   .overlay.show{display:flex;}
-  .modal{background:#fff;border-radius:14px;width:100%;max-width:680px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
-  .modal.wide{max-width:760px;}
-  .modal-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;}
-  .modal-head h3{font-size:17px;}
+  .modal{background:#fff;border-radius:14px;width:100%;max-width:660px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+  .modal.wide{max-width:820px;}
+  .modal.xwide{max-width:1000px;}
+  .modal-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;}
+  .modal-head h3{font-size:16px;}
+  .modal-head .sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
   .modal-head .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:22px;line-height:1;}
-  .modal-body{padding:20px 22px;max-height:64vh;overflow:auto;}
-  .modal-foot{padding:14px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;}
-  .field{display:flex;flex-direction:column;gap:6px;}
+  .modal-body{padding:18px 20px;max-height:68vh;overflow:auto;}
+  .modal-foot{padding:13px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;}
+  .modal-foot .left{margin-right:auto;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;}
+  .field{display:flex;flex-direction:column;gap:5px;}
   .field.full{grid-column:1/-1;}
-  .field label{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .field label{font-size:12px;color:var(--muted);font-weight:600;}
   .field label .req{color:var(--bad);}
-  .field input,.field select,.field textarea{padding:9px 11px;border:1px solid var(--line);
-    border-radius:8px;font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink);}
+  .field input,.field select,.field textarea{padding:8px 10px;border:1px solid var(--line);
+    border-radius:8px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink);width:100%;}
   .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);}
+  .field input[readonly]{background:var(--soft);color:var(--muted);}
   .field textarea{resize:vertical;min-height:62px;}
   .field .hint{font-size:11px;color:var(--muted);}
-  .filebox{border:1.5px dashed var(--line);border-radius:8px;padding:12px;text-align:center;cursor:pointer;background:var(--soft);}
+  .filebox{border:1.5px dashed var(--line);border-radius:8px;padding:10px;text-align:center;cursor:pointer;background:var(--soft);}
   .filebox:hover{border-color:var(--accent);}
   .filebox .pv{margin-top:8px;}
-  .filebox img{max-width:120px;max-height:120px;border-radius:6px;border:1px solid var(--line);}
+  .filebox img{max-width:110px;max-height:110px;border-radius:6px;border:1px solid var(--line);}
   .filebox .lnk{color:var(--accent);font-weight:600;}
-  /* ---------- 业务流 ---------- */
-  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-  .flow .step{background:var(--soft);border:1px solid var(--line);border-radius:20px;
-    padding:7px 14px;font-size:12.5px;color:var(--muted);}
-  .flow .step.on{background:var(--primary);color:#1a1a1a;font-weight:700;border-color:var(--primary);}
-  .flow .arr{color:var(--muted);font-size:12px;}
-  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px;}
-  .bar-row .name{width:150px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .bar-track{flex:1;background:var(--soft);border-radius:6px;height:18px;overflow:hidden;}
-  .bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#f7c66b);border-radius:6px;}
-  .bar-row .num{width:34px;text-align:right;color:var(--muted);}
+  /* 详情 */
+  .sec-title{font-size:12.5px;font-weight:700;color:var(--ink);margin:16px 0 8px;padding-left:8px;border-left:3px solid var(--primary);}
+  .sec-title:first-child{margin-top:0;}
+  .kvgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px 18px;}
+  .kv{font-size:13px;}
+  .kv .k{font-size:11.5px;color:var(--muted);font-weight:600;}
+  .kv .v{margin-top:2px;word-break:break-word;white-space:pre-wrap;line-height:1.6;}
+  .hero{display:flex;gap:14px;align-items:flex-start;}
+  .hero img{width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--soft);}
+  .hero .noimg{width:120px;height:120px;border-radius:10px;border:1px dashed var(--line);display:flex;
+    align-items:center;justify-content:center;color:var(--muted);font-size:11px;background:var(--soft);}
+  /* 时间线 */
+  .tl{position:relative;padding-left:18px;}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line);}
+  .tli{position:relative;padding:0 0 14px 6px;}
+  .tli::before{content:"";position:absolute;left:-17px;top:5px;width:10px;height:10px;border-radius:50%;
+    background:var(--primary);border:2px solid #fff;box-shadow:0 0 0 1px var(--line);}
+  .tli.blue::before{background:var(--accent);}
+  .tli.green::before{background:var(--ok);}
+  .tli.red::before{background:var(--bad);}
+  .tli .h{font-size:13px;font-weight:600;}
+  .tli .m{font-size:11.5px;color:var(--muted);margin-top:1px;}
+  .tli .b{font-size:12.5px;color:var(--ink);margin-top:4px;white-space:pre-wrap;line-height:1.6;}
+  .relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+  .relcard{border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer;background:var(--soft);}
+  .relcard:hover{border-color:var(--primary);background:#fff;}
+  .relcard img{width:100%;height:80px;object-fit:cover;border-radius:6px;background:#fff;border:1px solid var(--line);}
+  .relcard .noimg{height:80px;border:1px dashed var(--line);border-radius:6px;display:flex;align-items:center;
+    justify-content:center;color:var(--muted);font-size:11px;}
+  .relcard .n{font-size:12px;margin-top:6px;font-weight:600;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .relcard .i{font-size:11px;color:var(--accent);font-weight:600;}
+  .ainfo{background:#fff8ec;border:1px solid #fcd9a3;border-radius:10px;padding:12px;font-size:12.5px;line-height:1.7;}
+  .ainfo .h{font-weight:700;color:#92400e;}
+  .chipbar{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{background:var(--primary);color:#1a1a1a;font-size:11.5px;font-weight:600;
+    padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;}
+  .chip.ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line);}
+  .chip button{background:none;border:none;cursor:pointer;font-size:13px;font-weight:800;color:inherit;}
+  .muted{color:var(--muted);}
+  .ph{text-align:center;padding:56px 20px;color:var(--muted);}
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
     background:#0f1b2d;color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;
     opacity:0;transition:.25s;z-index:99;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  .filterbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
-  .filterbar select{padding:8px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fff;}
-  .chip{background:var(--primary);color:#1a1a1a;font-size:12px;font-weight:600;
-    padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;}
-  .chip button{background:none;border:none;cursor:pointer;font-size:13px;color:#1a1a1a;font-weight:800;}
-  .muted{color:var(--muted);}
-  .ph{text-align:center;padding:60px 20px;color:var(--muted);}
-  .ph .ic{font-size:46px;margin-bottom:12px;}
-  .ph h3{color:var(--ink);font-size:16px;margin-bottom:8px;}
-  .ph p{max-width:420px;margin:0 auto;line-height:1.7;font-size:13px;}
   ::-webkit-scrollbar{width:9px;height:9px;}
   ::-webkit-scrollbar-thumb{background:#c5cdd9;border-radius:6px;}
+  /* ---------- 移动端 ---------- */
+  @media (max-width:900px){
+    body{flex-direction:column;}
+    .sidebar{width:100%;flex-direction:row;align-items:center;gap:10px;padding:8px 10px;overflow-x:auto;}
+    .brand{border:none;padding:0;}
+    .brand h1{display:none;} .brand .sub{display:none;}
+    .nav{display:flex;gap:6px;padding:0;overflow-x:auto;}
+    .nav .group{display:none;}
+    .nav a{margin-bottom:0;padding:7px 10px;flex-shrink:0;}
+    .nav a .ico{display:none;}
+    .nav a .tag,.nav a .count{display:none;}
+    .side-foot{display:none;}
+    .main{min-height:0;}
+    .topbar{height:auto;flex-wrap:wrap;padding:10px 12px;gap:8px;}
+    .search{max-width:100%;order:3;}
+    .content{padding:12px;}
+    .grid2{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));}
+    .modal{max-width:100%;}
+    .overlay{padding:10px;}
+  }
 </style>
 </head>
 <body>
-  <!-- 侧边栏 -->
+  <!-- 侧边栏（导航由 JS 根据 NAV 配置生成，保持唯一真相源） -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo">
         <div class="mark">TBD</div>
         <div>
           <h1>TBD Hardware B2B</h1>
-          <div class="sub">AI System V1.0</div>
+          <div class="sub">AI Customer Development System</div>
         </div>
       </div>
     </div>
-    <nav class="nav" id="nav">
-      <div class="group">核心数据（第一阶段）</div>
-      <a data-view="dashboard"><span class="ico">▦</span>数据看板</a>
-      <a data-view="factory" class="active"><span class="ico">🏭</span>工厂管理<span class="tag">核心</span></a>
-      <a data-view="product"><span class="ico">📦</span>产品池<span class="tag">核心</span></a>
-      <div class="group">业务流（第二阶段）</div>
-      <a data-view="featured"><span class="ico">⭐</span>主推产品</a>
-      <a data-view="kb"><span class="ico">📚</span>产品知识库</a>
-      <a data-view="dev"><span class="ico">🎯</span>客户开发</a>
-      <a data-view="crm"><span class="ico">👥</span>客户CRM</a>
-      <a data-view="task"><span class="ico">✓</span>跟进任务</a>
-    </nav>
-    <div class="side-foot" id="syncFoot">☁ 本地模式<br>Phase 1 · 工厂 & 产品池</div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot" id="syncFoot">⏳ 正在连接云端…<br>供应链 → 产品 → AI背调 → CRM → 成交</div>
   </aside>
 
   <!-- 主区 -->
   <main class="main">
     <div class="topbar">
       <div>
-        <h2 id="pageTitle">工厂管理</h2>
-        <div class="crumb" id="pageCrumb">管理供应商工厂资源</div>
+        <h2 id="pageTitle">数据看板</h2>
+        <div class="crumb" id="pageCrumb">全局业务状态</div>
       </div>
       <div class="spacer"></div>
       <div class="search">
         <span class="si">🔍</span>
-        <input id="globalSearch" placeholder="搜索工厂 / 产品（名称、编号、联系人…）">
+        <input id="globalSearch" placeholder="搜索（公司 / 工厂 / 产品…）">
       </div>
       <button class="btn btn-primary" id="addBtn">＋ 新增</button>
     </div>
@@ -188,53 +250,1631 @@
     <div class="modal" id="modal"></div>
   </div>
   <div class="toast" id="toast"></div>
-
 <script>
 /* ============================================================
-   TBD Hardware B2B AI System V1.0 —— 本地存储层
+   TBD Hardware B2B AI Customer Development System
+   核心层：存储 / 编号 / 通用 CRUD 引擎 / 组件
+   ------------------------------------------------------------
+   主线数据结构：
+   Supplier ID → Product ID → Product Knowledge → Company ID
+   → Product Matching → Decision Maker → CRM → Follow-up → Order
    ============================================================ */
-const LS_F = "tbd_factories_v1";
-const LS_P = "tbd_products_v1";
 
-function loadFactories(){ try{return JSON.parse(localStorage.getItem(LS_F))||[];}catch(e){return [];} }
-function saveFactories(a){ localStorage.setItem(LS_F, JSON.stringify(a)); }
-function loadProducts(){ try{return JSON.parse(localStorage.getItem(LS_P))||[];}catch(e){return [];} }
-function saveProducts(a){ localStorage.setItem(LS_P, JSON.stringify(a)); }
+/* ---------- 集合与本地键 ---------- */
+const KEY = {
+  factory :"tbd_factories_v1",
+  product :"tbd_products_v1",
+  featured:"tbd_featured_v1",
+  kb      :"tbd_kb_v1",
+  lead    :"tbd_leads_v1",
+  contact :"tbd_contacts_v1",
+  crm     :"tbd_crm_v1",
+  task    :"tbd_tasks_v1",
+  email   :"tbd_emails_v1",
+  act     :"tbd_acts_v1",
+  settings:"tbd_settings_v1"
+};
+const COLS = Object.keys(KEY);
 
-/* 编号生成：Supplier ID = S001，Product ID = P0001 */
-function nextSupplierId(){
-  const arr = loadFactories();
-  let max = 0;
-  arr.forEach(f=>{ const m=/^S(\d+)$/.exec(f.supplierId); if(m) max=Math.max(max, +m[1]); });
-  return "S" + String(max+1).padStart(3,"0");
+function rd(k, def){
+  try{ const v=JSON.parse(localStorage.getItem(KEY[k])); return Array.isArray(v)?v:(typeof v==="object"&&v)||def; }
+  catch(e){ return def; }
 }
-function nextProductId(){
-  const arr = loadProducts();
-  let max = 0;
-  arr.forEach(p=>{ const m=/^P(\d+)$/.exec(p.productId); if(m) max=Math.max(max, +m[1]); });
-  return "P" + String(max+1).padStart(4,"0");
-}
-function productsOf(supplierId){ return loadProducts().filter(p=>p.supplierId===supplierId); }
-function getFactory(id){ return loadFactories().find(f=>f.supplierId===id); }
+function wr(k, v){ localStorage.setItem(KEY[k], JSON.stringify(v)); syncSoon(); }
 
-/* 首次进入植入示例数据，演示 S001 → P0001/P0002/P0003 */
+/* ---------- 编号自动生成 ---------- */
+function genId(prefix, coll, field, pad){
+  let m=0; const re=new RegExp("^"+prefix+"(\\d+)$");
+  rd(coll,[]).forEach(o=>{ const x=re.exec(o[field]||""); if(x) m=Math.max(m,+x[1]); });
+  return prefix+String(m+1).padStart(pad,"0");
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function today(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function addDays(n){ const d=new Date(); d.setDate(d.getDate()+n);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+
+/* ---------- 工具 ---------- */
+function $(s,r){ return (r||document).querySelector(s); }
+function el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; }
+function esc(s){ return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2000); }
+function badge(v){
+  if(v==null||v==="") return '<span class="badge b-none">—</span>';
+  return '<span class="badge b-'+esc(v)+'">'+esc(v)+"</span>";
+}
+function tbdOr(v){ return (v==null||v==="")?'<span class="tbd">TBD / 待确认</span>':esc(v); }
+
+/* ---------- 图片 / 文件上传 ---------- */
+function readAsset(file, cb){
+  if(!file) return cb(null);
+  if(file.type==="application/pdf"){
+    const r=new FileReader();
+    r.onload=e=>cb({type:"file",name:file.name,data:e.target.result});
+    r.readAsDataURL(file); return;
+  }
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width,h=img.height; const M=900;
+      if(w>h&&w>M){h=Math.round(h*M/w);w=M;} else if(h>M){w=Math.round(w*M/h);h=M;}
+      const c=document.createElement("canvas"); c.width=w;c.height=h;
+      c.getContext("2d").drawImage(img,0,0,w,h);
+      cb({type:"img",name:file.name,data:c.toDataURL("image/jpeg",0.72)});
+    };
+    img.onerror=()=>cb(null);
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+function assetView(a, cls){
+  if(!a||!a.data) return '<div class="noimg">未上传</div>';
+  if(a.type==="img") return '<img src="'+a.data+'" alt="">';
+  return '<div class="lnk">📄 '+esc(a.name||"图纸")+"</div>";
+}
+
+/* ---------- 模态框 ---------- */
+function openModal(html, cls){
+  const m=$("#modal"); m.className="modal "+(cls||""); m.innerHTML=html;
+  $("#overlay").classList.add("show");
+}
+function closeModal(){ $("#overlay").classList.remove("show"); $("#modal").innerHTML=""; }
+$("#overlay").addEventListener("click",e=>{ if(e.target.id==="overlay") closeModal(); });
+
+function confirmBox(msg, onYes){
+  openModal(
+    '<div class="modal-head"><h3>请确认</h3><span class="x" data-act="close">×</span></div>'+
+    '<div class="modal-body"><div style="font-size:13.5px;line-height:1.7">'+msg+"</div></div>"+
+    '<div class="modal-foot"><button class="btn btn-ghost" data-act="close">取消</button>'+
+    '<button class="btn btn-danger" id="cfmYes">确定</button></div>', "");
+  const yes=$("#cfmYes");
+  yes.onclick=()=>{ closeModal(); onYes(); };
+}
+
+/* ============================================================
+   云端同步（服务器为唯一真相源，本机 localStorage 仅作离线缓存）
+   ============================================================ */
+function collect_all(){
+  const o={};
+  COLS.forEach(c=>{ o[c]= (c==="settings")? rd(c,{}): rd(c,[]); });
+  /* 兼容旧版服务端校验（旧 server.js 只认 factories / products） */
+  o.factories=o.factory; o.products=o.product;
+  return o;
+}
+function apply_all(d){
+  if(!d) return;
+  COLS.forEach(c=>{ const v=d[c]; if(v!==undefined) localStorage.setItem(KEY[c], JSON.stringify(v)); });
+}
+async function pushSnapshot(){
+  try{
+    const r=await fetch("/api/snapshot",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(collect_all())});
+    setSync(r.ok?"cloud":"error");
+  }catch(e){ setSync("offline"); }
+}
+async function pullSnapshot(){
+  try{
+    const r=await fetch("/api/snapshot"); const d=await r.json();
+    /* 服务器为空 → 不允许覆盖本机数据，反手把本机数据种上去 */
+    const total=d?COLS.filter(c=>c!=="settings"&&Array.isArray(d[c]))
+                      .reduce((n,c)=>n+d[c].length,0):0;
+    if(d && total>0){ apply_all(d); setSync("cloud"); }
+    else await pushSnapshot();
+  }catch(e){ setSync("offline"); }
+}
+let _pt=null;
+function syncSoon(){ clearTimeout(_pt); _pt=setTimeout(pushSnapshot,450); }
+function setSync(mode){
+  const f=$("#syncFoot"); if(!f) return;
+  const tag="Phase 1 · 已跑通全链路数据结构";
+  if(mode==="cloud")        f.innerHTML="☁ 云端已同步<br>"+tag;
+  else if(mode==="syncing") f.innerHTML="⏳ 正在连接云端…<br>"+tag;
+  else if(mode==="offline") f.innerHTML="⚠ 离线（本地已存）<br>"+tag;
+  else                      f.innerHTML="⚠ 同步异常<br>"+tag;
+}
+
+/* ============================================================
+   通用 CRUD 引擎（由 SCHEMA 驱动，所有模块行为保持一致）
+   ============================================================ */
+let FORM=null, FORMCOLL=null, FORMID=null, AFTER=null;
+
+function sch(coll){ return SCHEMA[coll]; }
+function rowTitle(coll,o){ const s=sch(coll); return (s.title?s.title(o):(o[s.nameKey||"name"]))||"—"; }
+function toBDash(){} // placeholder
+
+function cellValue(coll,o,k){
+  const s=sch(coll), f=s.fields.find(x=>x.k===k)||{};
+  const v=(f.type==="auto"&&f.fn)?f.fn(o):o[k];
+  switch(f.type){
+    case "image":
+    case "file":   return v&&v.data?assetView(v,"small"):"—";
+    case "refmulti":{
+      if(!v||!v.length) return '<span class="tbd">未找到</span>';
+      return '<div class="cmp-list">'+v.map(id=>'<span class="chip ghost" data-goproduct="'+esc(id)+'">'+esc(id)+"</span>").join("")+"</div>";
+    }
+    case "select": return v?badge(v):"—";
+    default:       return v?esc(v):"—";
+  }
+}
+
+/* ---------- 列表页 ---------- */
+function renderList(coll){
+  const s=sch(coll);
+  let list=rd(coll,[]);
+
+  /* 跨模块联动：被上游带入的过滤条件 */
+  if(coll==="product" && state.supplierFilter) list=list.filter(o=>o.supplierId===state.supplierFilter);
+  if(coll==="product" && state.focusId)        list=list.filter(o=>o.productId===state.focusId);
+  if(coll==="lead"    && state.stageFilter)    list=list.filter(o=>(o.stage||o.aiStatus||"")===state.stageFilter);
+
+  const q=state.search.trim().toLowerCase();
+  if(q) list=list.filter(o=>s.search.map(k=>(o[k]||"")).join(" ").toLowerCase().includes(q));
+  (s.filters||[]).forEach(f=>{ if(state[f.k]) list=list.filter(o=>o[f.k]===state[f.k]); });
+
+  const c=$("#content"); c.innerHTML="";
+
+  /* 工具栏 */
+  const tb=el("div","toolbar");
+  let tbHtml="";
+  (s.filters||[]).forEach(f=>{
+    /* 选项来源优先级：动态函数 > 预定义常量 > 按现有数据去重 */
+    let opts;
+    if(f.optsFn) opts=f.optsFn().map(o=>o.v);
+    else if(f.opts&&f.opts.length) opts=f.opts;
+    else opts=[...new Set(rd(coll,[]).map(o=>o[f.k]).filter(Boolean))];
+    tbHtml+='<select data-filter="'+f.k+'"><option value="">'+esc(f.t)+"：全部</option>"+
+      opts.map(o=>'<option value="'+esc(o)+'"'+(state[f.k]===o?" selected":"")+">"+esc(o)+"</option>").join("")+
+      "</select>";
+  });
+  if(s.filters&&s.filters.length) tbHtml+=" ";
+  tb.innerHTML=tbHtml+'<span class="cnt">共 '+list.length+" 条 · "+esc(s.desc||"")+"</span>";
+  if(state.supplierFilter&&coll==="product"){
+    const f=getFactory(state.supplierFilter);
+    tb.insertAdjacentHTML("afterbegin",
+      '<span class="chip">来自工厂：'+esc(state.supplierFilter)+" "+esc(f?f.name:"")+
+      '<button data-act="clrFilter">✕</button></span>');
+  }
+  c.appendChild(tb);
+
+  if(!list.length){
+    c.appendChild(el("div","empty",'<div class="big">'+esc(s.ico||"📋")+"</div><div>"+esc(s.emptyTip||"暂无数据")+
+      "</div><div class=\"muted\" style=\"margin-top:8px;font-size:12.5px\">点击右上角「＋ 新增」开始录入</div>"));
+    return;
+  }
+
+  /* 表格 */
+  const wrap=el("div","tablewrap");
+  let head="<th>"+esc(s.keyLabel)+"</th>";
+  s.cols.forEach(k=>{ const f=s.fields.find(x=>x.k===k); head+="<th>"+esc(f?f.t:k)+"</th>"; });
+  head+='<th style="width:170px">操作</th>';
+
+  const rows=list.map(o=>{
+    let tds='<td><span class="id-link">'+esc(o[s.key])+"</span></td>";
+    s.cols.forEach(k=>{
+      const f=s.fields.find(x=>x.k===k)||{};
+      const cls=(f.type==="refmulti"||f.type==="image"||f.type==="file")?"":'class="row-title"';
+      tds+="<td "+cls+">"+cellValue(coll,o,k)+"</td>";
+    });
+    tds+='<td><div class="row-actions">'+
+      '<button class="btn btn-ghost btn-sm" data-open="'+coll+":"+esc(o[s.key])+'">详情</button>'+
+      '<button class="btn btn-ghost btn-sm" data-edit="'+coll+":"+esc(o[s.key])+'">编辑</button>'+
+      '<button class="btn btn-danger btn-sm" data-del="'+coll+":"+esc(o[s.key])+'">删除</button>'+
+      "</div></td>";
+    return '<tr data-open="'+coll+":"+esc(o[s.key])+'">'+tds+"</tr>";
+  }).join("");
+  wrap.innerHTML="<table><thead><tr>"+head+"</tr></thead><tbody>"+rows+"</tbody></table>";
+  c.appendChild(wrap);
+}
+
+/* ---------- 表单 ---------- */
+function openForm(coll, id){
+  const s=sch(coll); const old=id?rd(coll,[]).find(o=>o[s.key]===id):null;
+  FORMCOLL=coll; FORMID=id||null;
+  FORM = old?JSON.parse(JSON.stringify(old)):{};
+  if(!old){
+    FORM[s.key]=s.idgen?s.idgen():"";
+    (s.defaults||[]).forEach(([k,v])=>{ FORM[k]=v; });
+    if(state.supplierFilter && coll==="product" && FORM.supplierId===undefined) FORM.supplierId=state.supplierFilter;
+  }
+  buildForm();
+}
+function buildForm(){
+  const s=sch(FORMCOLL);
+  let body="";
+  s.fields.forEach(f=>{
+    if(f.ro||f.type==="auto"||f.type==="id"||f.hide) return;   // 只读/派生字段不进表单
+    const full=(f.type==="textarea"||f.type==="image"||f.type==="file"||
+                f.type==="refmulti"||f.type==="imagemulti")?" full":"";
+    let inner="";
+    switch(f.type){
+      case "select":
+        inner='<select data-k="'+f.k+'"><option value="">—</option>'+
+          (f.opts||[]).map(o=>'<option value="'+esc(o)+'"'+(FORM[f.k]===o?" selected":"")+">"+esc(o)+"</option>").join("")+"</select>";
+        break;
+      case "selectdyn":{
+        const opts=f.optsFn();
+        inner='<select data-k="'+f.k+'"><option value="">'+(opts.length?"—":"（暂无可选数据）")+"</option>"+
+          opts.map(o=>'<option value="'+esc(o.v)+'"'+(FORM[f.k]===o.v?" selected":"")+">"+esc(o.t)+"</option>").join("")+"</select>";
+        break;
+      }
+      case "textarea":
+        inner='<textarea data-k="'+f.k+'" rows="3" placeholder="'+esc(f.ph||"")+'">'+esc(FORM[f.k]||"")+"</textarea>";
+        break;
+      case "image": case "file":{
+        const a=FORM[f.k];
+        inner='<div class="filebox" data-file="'+f.k+'">点击上传'+esc(f.t)+
+          '<div class="pv" data-pv="'+f.k+'">'+(a&&a.data?assetView(a):"")+"</div></div>";
+        if(a&&a.data) inner+='<div class="hint" style="margin-top:4px"><span class="muted" data-clearfile="'+f.k+'" style="cursor:pointer;color:var(--bad)">移除已上传文件</span></div>';
+        break;
+      }
+      case "refmulti":{
+        const arr=FORM[f.k]||[];
+        inner='<select data-k="'+f.k+'" multiple size="4" style="height:auto">'+
+          (f.optsFn?f.optsFn():[]).map(o=>'<option value="'+esc(o.v)+'"'+(arr.includes(o.v)?" selected":"")+">"+esc(o.t)+"</option>").join("")+
+          "</select><div class=\"hint\">按住 Ctrl / Cmd 可多选；只能从已录入的产品池中选择</div>";
+        break;
+      }
+      default:
+        inner='<input data-k="'+f.k+'" type="'+(f.type==="number"?"number":f.type==="date"?"date":"text")+
+          '" value="'+esc(FORM[f.k]||"")+'" placeholder="'+esc(f.ph||"")+'">';
+    }
+    body+='<div class="field'+full+'"><label>'+esc(f.t)+(f.req?' <span class="req">*</span>':'')+"</label>"+inner+
+      (f.hint?'<div class="hint">'+esc(f.hint)+"</div>":"")+"</div>";
+  });
+
+  openModal(
+    '<div class="modal-head"><div><h3>'+(FORMID?"编辑":"新增")+esc(s.name)+'</h3>'+
+      '<div class="sub">'+esc(s.keyLabel)+"："+esc(FORM[s.key]||"（自动生成）")+"</div></div>"+
+      '<span class="x" data-act="close">×</span></div>'+
+    '<div class="modal-body"><div class="grid2">'+body+"</div></div>"+
+    '<div class="modal-foot"><button class="btn btn-ghost" data-act="close">取消</button>'+
+    '<button class="btn btn-primary" data-act="save">'+(FORMID?"保存修改":"创建")+"</button></div>",
+    s.modalCls||"wide");
+
+  /* 事件绑定 */
+  $("#modal").querySelectorAll("[data-k]").forEach(inp=>{
+    inp.addEventListener("change",()=>{
+      if(inp.multiple) FORM[inp.dataset.k]=[...inp.selectedOptions].map(o=>o.value);
+      else FORM[inp.dataset.k]=inp.value;
+      saveForm(false);
+    });
+  });
+  $("#modal").querySelectorAll("[data-file]").forEach(box=>{
+    box.onclick=()=>{
+      const k=box.dataset.file; const i=document.createElement("input");
+      i.type="file"; i.accept=(sch(FORMCOLL).fields.find(f=>f.k===k).type==="file")?
+        "image/*,.pdf":"image/*";
+      i.onchange=e=>{ const file=e.target.files[0]; if(!file) return;
+        readAsset(file,a=>{ if(!a){toast("文件读取失败");return;} FORM[k]=a; buildForm(); }); };
+      i.click();
+    };
+  });
+  $("#modal").querySelectorAll("[data-clearfile]").forEach(a=>{
+    a.onclick=()=>{ FORM[a.dataset.clearfile]=null; buildForm(); };
+  });
+}
+function saveForm(close){
+  const s=sch(FORMCOLL);
+  const miss=(s.fields.find(f=>f.req && !FORM[f.k]));
+  if(miss && close){ toast("请填写必填项："+miss.t); return; }
+  if(s.beforeSave) s.beforeSave(FORM);   // 派生字段落库（如从产品池自动读取名称/图片）
+  const arr=rd(FORMCOLL,[]);
+  const i=arr.findIndex(o=>o[s.key]===FORM[s.key]);
+  if(i>=0) arr[i]=FORM; else arr.push(FORM);
+  wr(FORMCOLL, arr);
+  if(close){ closeModal(); toast(FORMID?"已保存修改":"已创建"); if(AFTER){ const f=AFTER; AFTER=null; f(); } render(); }
+}
+
+/* ---------- 详情 ---------- */
+function openDetail(coll, id){
+  const s=sch(coll); const o=rd(coll,[]).find(x=>x[s.key]===id);
+  if(!o){ toast("未找到该记录"); return; }
+
+  let body="";
+  /* 图片区 */
+  if(s.heroKey){ const a=o[s.heroKey];
+    body+='<div class="hero">'+(a&&a.data?assetView(a):'<div class="noimg">未上传图片</div>')+
+      '<div style="flex:1"><div style="font-size:18px;font-weight:700">'+esc(rowTitle(coll,o))+"</div>"+
+      '<div class="muted" style="margin-top:4px;font-size:12.5px">'+esc(s.keyLabel)+"："+
+      '<span class="id-link">'+esc(o[s.key])+"</span></div>"+
+      (s.heroExtra?s.heroExtra(o):"")+"</div></div>";
+  }
+  /* 分组字段 */
+  const skip=f=>f.hide||f.type==="id";      // 详情里：主键已在标题栏，其余（含派生字段）全部展示
+  const groups=[];
+  s.fields.forEach(f=>{ if(skip(f)) return; const g=f.g||"基础信息"; if(!groups.includes(g)) groups.push(g); });
+  groups.forEach(g=>{
+    body+='<div class="sec-title">'+esc(g)+"</div>";
+    let cellHtml="";
+    s.fields.forEach(f=>{
+      if(skip(f)||(f.g||"基础信息")!==g) return;
+      const v=(f.type==="auto"&&f.fn)?f.fn(o):o[f.k];
+      let html;
+      if(f.type==="refmulti") html=(v&&v.length)?'<div class="cmp-list">'+v.map(id=>'<span class="chip ghost" data-goproduct="'+esc(id)+'">'+esc(id)+"</span>").join("")+"</div>":'<span class="tbd">未找到</span>';
+      else if(f.type==="image"||f.type==="file"||(v&&v.data)) html=(v&&v.data)?assetView(v):'<span class="tbd">未上传</span>';
+      else if(f.type==="select") html=v?badge(v):'<span class="tbd">未找到</span>';
+      else html=(typeof v==="object")?"":((s.tbd&&!v)?'<span class="tbd">TBD / 待确认</span>':esc(v));
+      cellHtml+='<div class="kv"><div class="k">'+esc(f.t)+'</div><div class="v">'+html+"</div></div>";
+    });
+    body+='<div class="kvgrid">'+cellHtml+"</div>";
+  });
+  /* 关联区块 */
+  (s.related||[]).forEach(r=>{ const h=r.fn(o); if(h) body+=h; });
+
+  openModal(
+    '<div class="modal-head"><div><h3>'+esc(rowTitle(coll,o))+"</h3>"+
+      '<div class="sub">'+esc(s.name)+" · "+esc(s.keyLabel)+"："+esc(o[s.key])+"</div></div>"+
+      '<span class="x" data-act="close">×</span></div>'+
+    '<div class="modal-body">'+body+"</div>"+
+    '<div class="modal-foot">'+(s.detailActions?s.detailActions(o):"")+
+      '<button class="btn btn-ghost" data-act="editthis">编辑</button>'+
+      '<button class="btn btn-danger" data-act="delthis">删除</button>'+
+      '<button class="btn btn-primary" data-act="close">关闭</button></div>',
+    "xwide");
+
+  /* 记录当前详情的实体身份，供业务动作按钮使用 */
+  const m=$("#modal");
+  m.dataset.eid=id; m.dataset.ecoll=coll;
+  m.dataset.cid=(coll==="lead"||coll==="crm")?id:((coll==="task"&&o.companyId)?o.companyId:
+                (coll==="contact"&&o.companyId)?o.companyId:"");
+  m.dataset.pid=(coll==="product"||coll==="featured"||coll==="kb")?id:"";
+
+  m.querySelector('[data-act="editthis"]').onclick=()=>openForm(coll,id);
+  m.querySelector('[data-act="delthis"]').onclick=()=>removeRow(coll,id,true);
+}
+
+function removeRow(coll,id,inDetail){
+  const s=sch(coll); const o=rd(coll,[]).find(x=>x[s.key]===id); if(!o) return;
+  confirmBox("确定删除 <b>"+esc(rowTitle(coll,o))+"</b>（"+esc(id)+"）？<br>此操作不可撤销。",()=>{
+    wr(coll, rd(coll,[]).filter(x=>x[s.key]!==id));
+    if(inDetail) closeModal();
+    toast("已删除"); render();
+  });
+}
+
+/* ---------- 全局事件委托（一次绑定，覆盖所有表格/导航交互） ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target;
+  const close=t.closest("[data-act='close']");
+  if(close){ closeModal(); return; }
+  const save=t.closest("[data-act='save']");
+  if(save){ saveForm(true); return; }
+  const clrF=t.closest("[data-act='clrFilter']");
+  if(clrF){ state.supplierFilter=null; render(); return; }
+  /* 顺序：行内操作按钮优先，最后才是「点整行看详情」 */
+  const ed=t.closest("[data-edit]");
+  if(ed){ const [c,i]=ed.dataset.edit.split(":"); openForm(c,i); return; }
+  const del=t.closest("[data-del]");
+  if(del){ const [c,i]=del.dataset.del.split(":"); removeRow(c,i,false); return; }
+  const gp=t.closest("[data-goproduct]");
+  if(gp){ openDetail("product",gp.dataset.goproduct); return; }
+  const gs=t.closest("[data-gofactory]");
+  if(gs){ openDetail("factory",gs.dataset.gofactory); return; }
+  const gc=t.closest("[data-gocompany]");
+  if(gc){ openCRM(gc.dataset.gocompany); return; }
+  const open=t.closest("[data-open],[data-rowopen]");
+  if(open){ const [c,i]=(open.dataset.open||open.dataset.rowopen).split(":"); openDetail(c,i); return; }
+  const nav=t.closest("#nav a");
+  if(nav){ go(nav.dataset.view); return; }
+});
+document.addEventListener("change",e=>{
+  const f=e.target.closest("[data-filter]");
+  if(f){ state[f.dataset.filter]=f.value; render(); }
+});
+
+</script>
+<script>
+/* ============================================================
+   字段定义（Schema）——唯一真相源
+   所有模块的列表 / 表单 / 详情 / 校验都由这里驱动
+   ============================================================ */
+const ENUMS = {
+  ABC   :["A","B","C"],
+  HML   :["高","中","低"],
+  SMW   :["强","中","弱"],
+  DOC   :["完整","部分","缺失"],
+  YESNO :["是","否"],
+  SUPPORT:["完整","部分","无"],
+  YESNOWAIT:["是","否","待确认"],
+  CO_TYPE:["品牌商","批发商","进口商","分销商","零售商","制造商/工厂","工程采购商","电商平台卖家","其他"],
+  SRC   :["LinkedIn","Google 搜索","展会名单","历史邮件","官网/独立站","客户介绍","名录/黄页","其他"],
+  CONTACT_SRC:["官网","LinkedIn","展会","邮件回复","Google","其他"],
+  METHOD:["Email","LinkedIn","WhatsApp","电话"],
+  TSTATUS:["待处理","已完成","暂停"],
+  AISTATUS:["未背调","AI 已背调","人工确认"],
+  QUOTE :["未报价","报价中","已报价","已确认价格"],
+  SAMPLE:["未寄样","寄样中","已寄样","样品通过","样品未通过"],
+  STAGE :["待开发","首次联系","已回复","需求确认","已报价","样品","谈判","成交","暂停"]
+};
+const SCHEMA = {};
+
+/* ---------- 公用选项 ---------- */
+function factoryOpts(){
+  return rd("factory",[]).map(f=>({v:f.supplierId,t:f.supplierId+" · "+f.name}));
+}
+function productOpts(){
+  return rd("product",[]).map(p=>({v:p.productId,t:p.productId+" · "+(p.name||"")}));
+}
+function kbOpts(){                       // AI 只能从这里推荐产品
+  return rd("kb",[]).map(k=>{
+    const p=getProduct(k.productId);
+    return {v:k.productId,t:k.productId+" · "+(p?p.name:(k.name||""))};
+  });
+}
+function companyOpts(){
+  return rd("lead",[]).map(c=>({v:c.companyId,t:c.companyId+" · "+(c.name||"")}));
+}
+function getFactory(id){ return rd("factory",[]).find(f=>f.supplierId===id); }
+function getProduct(id){ return rd("product",[]).find(p=>p.productId===id); }
+function getKB(id){      return rd("kb",[]).find(k=>k.productId===id); }
+function getCompany(id){ return rd("lead",[]).find(c=>c.companyId===id); }
+function getCRM(id){     return rd("crm",[]).find(c=>c.companyId===id); }
+function getFtd(id){     return rd("featured",[]).find(f=>f.productId===id); }
+function contactsOf(id){ return rd("contact",[]).filter(c=>c.companyId===id); }
+function productsOf(sid){return rd("product",[]).filter(p=>p.supplierId===sid); }
+function tasksOf(id){    return rd("task",[]).filter(t=>t.companyId===id); }
+function emailsOf(id){   return rd("email",[]).filter(e=>e.companyId===id); }
+function actsOf(id){     return rd("act",[]).filter(a=>a.companyId===id); }
+
+/* ============================================================
+   一 / 二 · 工厂管理 Supplier Database（11 字段）
+   ============================================================ */
+SCHEMA.factory={
+  view:"factory", name:"工厂", ico:"🏭", key:"supplierId", keyLabel:"Supplier ID",
+  desc:"一个工厂可关联多个产品",
+  emptyTip:"暂无工厂，先建立供应链资源",
+  idgen:()=>genId("S","factory","supplierId",3),
+  search:["supplierId","name","contact","phone","category","market","products","advantage"],
+  filters:[{k:"cooperation",t:"配合度",opts:ENUMS.ABC}],
+  cols:["name","contact","phone","category","market","cooperation","support","lastContact"],
+  fields:[
+    {k:"supplierId",t:"Supplier ID",type:"id",ro:true,g:"工厂档案"},
+    {k:"name",      t:"工厂名称",  type:"text",req:true,g:"工厂档案"},
+    {k:"contact",   t:"联系人",    type:"text",g:"工厂档案"},
+    {k:"phone",     t:"联系方式",  type:"text",g:"工厂档案"},
+    {k:"category",  t:"产品大类",  type:"text",g:"工厂档案"},
+    {k:"products",  t:"可生产产品",type:"textarea",g:"工厂档案"},
+    {k:"advantage", t:"核心优势",  type:"textarea",g:"工厂档案"},
+    {k:"market",    t:"主要市场",  type:"text",g:"工厂档案"},
+    {k:"cooperation",t:"配合度",   type:"select",opts:ENUMS.ABC,g:"评估"},
+    {k:"support",   t:"资料支持",  type:"select",opts:ENUMS.SUPPORT,g:"评估"},
+    {k:"lastContact",t:"最近沟通日期",type:"date",g:"评估"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>"",
+  related:[
+    {fn:o=>{
+      const ps=productsOf(o.supplierId);
+      if(!ps.length) return '<div class="sec-title">关联产品</div><div class="muted">该工厂暂无关联产品，到「产品池」新增时选择 '+esc(o.supplierId)+" 即可挂上。</div>";
+      return '<div class="sec-title">关联产品（'+ps.length+'）</div><div class="relgrid">'+
+        ps.map(p=>'<div class="relcard" data-open="product:'+esc(p.productId)+'">'+pThumb(p)+
+          '<div class="n">'+esc(p.name||"")+'</div><div class="i">'+esc(p.productId)+"</div></div>").join("")+
+        "</div>";
+    }}
+  ]
+};
+
+/* ============================================================
+   三 · 产品池 Product Pool（12 字段）
+   ============================================================ */
+SCHEMA.product={
+  view:"product", name:"产品", ico:"📦", key:"productId", keyLabel:"Product ID",
+  desc:"快速录入供应商可提供的全部产品",
+  emptyTip:"暂无产品，先从工厂关联录入产品",
+  idgen:()=>genId("P","product","productId",4),
+  search:["productId","supplierId","name","model","material","market","size","surface"],
+  filters:[{k:"supplierId",t:"供应商",optsFn:factoryOpts}],
+  cols:["name","supplierId","model","market","moq","priceRange"],
+  heroKey:"image",
+  fields:[
+    {k:"productId", t:"Product ID",type:"id",ro:true,g:"产品基础"},
+    {k:"supplierId",t:"Supplier ID",type:"selectdyn",optsFn:factoryOpts,req:true,
+      hint:"关联工厂：从「工厂管理」中选择",g:"产品基础"},
+    {k:"image",     t:"产品图片",  type:"image",g:"产品基础"},
+    {k:"name",      t:"产品名",    type:"text",req:true,g:"产品基础"},
+    {k:"model",     t:"型号",      type:"text",g:"产品基础"},
+    {k:"size",      t:"尺寸",      type:"text",g:"产品基础"},
+    {k:"material",  t:"材质",      type:"text",g:"产品基础"},
+    {k:"surface",   t:"表面处理",  type:"text",g:"产品基础"},
+    {k:"market",    t:"主要市场",  type:"text",g:"产品基础"},
+    {k:"moq",       t:"MOQ",       type:"text",g:"产品基础"},
+    {k:"priceRange",t:"价格范围",  type:"text",g:"产品基础"},
+    {k:"drawing",   t:"图纸",      type:"file",hint:"支持 PDF / 图片",g:"附件"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>{
+    const f=getFactory(o.supplierId);
+    return '<div class="chipbar" style="margin-top:8px">'+
+      '<span class="chip ghost" data-gofactory="'+esc(o.supplierId)+'">'+esc(o.supplierId)+" 工厂详情</span>"+
+      (f?'<span class="chip ghost">'+esc(f.name)+"</span>":"")+
+      (getFtd(o.productId)?'<span class="chip">已设主推</span>':'<span class="chip ghost">未设主推</span>')+
+      (getKB(o.productId)?'<span class="chip ghost">知识库已建</span>':'<span class="chip ghost">知识库待建</span>')+
+      "</div>";
+  },
+  related:[
+    {fn:o=>{
+      const k=getKB(o.productId);
+      if(!k) return "";
+      return '<div class="sec-title">产品知识库摘要</div><div class="kvgrid">'+
+        kvWithTbd("产品类别",k.category)+kvWithTbd("应用场景",k.scenario)+
+        kvWithTbd("目标客户类型",k.targetCustomerType)+kvWithTbd("推荐开发关键词",k.keywords)+
+        "</div>";
+    }}
+  ]
+};
+function pThumb(p){
+  return (p.image&&p.image.data)?'<img src="'+p.image.data+'" alt="">':'<div class="noimg">暂无图片</div>';
+}
+function kvWithTbd(k,v){
+  return '<div class="kv"><div class="k">'+esc(k)+'</div><div class="v">'+
+    (v?esc(v):'<span class="tbd">TBD / 待确认</span>')+"</div></div>";
+}
+
+/* ============================================================
+   四 · 主推产品（从产品池选择，禁止重复录入产品资料）
+   ============================================================ */
+SCHEMA.featured={
+  view:"featured", name:"主推产品", ico:"⭐", key:"productId", keyLabel:"Product ID",
+  desc:"从 Product Pool 选择值得重点开发的产品，产品资料自动读取",
+  emptyTip:"尚未选定主推产品",
+  keySelectMessage:"请从产品池中选择",
+  search:["productId","name","supplierId","targetCustomerType","sellingPoint","targetMarket"],
+  filters:[{k:"isFeatured",t:"是否主推",opts:ENUMS.YESNO},{k:"priority",t:"开发优先级",opts:ENUMS.ABC}],
+  cols:["name","supplierId","demandLevel","priceComp","supplyAdv","docLevel","priority","isFeatured"],
+  heroKey:"image",
+  beforeSave:o=>{
+    const p=getProduct(o.productId);
+    if(p){ o.name=p.name; o.supplierId=p.supplierId; o.image=p.image||null; }
+  },
+  fields:[
+    {k:"productId", t:"Product ID",type:"selectdyn",optsFn:()=>{
+        const used=rd("featured",[]).map(f=>f.productId);
+        return productOpts().filter(o=>!used.includes(o.v)||o.v===(FORM&&FORM.productId));
+      },req:true,hint:"先从产品池选择，下方产品资料自动读取",g:"产品（自动读取）"},
+    {k:"name",      t:"产品名称",  type:"auto",ro:true,fn:o=>{const p=getProduct(o.productId);return p?p.name:o.name;},g:"产品（自动读取）"},
+    {k:"supplierId",t:"Supplier ID",type:"auto",ro:true,fn:o=>{const p=getProduct(o.productId);return p?p.supplierId:o.supplierId;},g:"产品（自动读取）"},
+    {k:"image",     t:"产品图片",  type:"auto",ro:true,g:"产品（自动读取）"},
+    {k:"targetMarket",t:"目标市场",type:"text",g:"市场定位"},
+    {k:"targetCustomerType",t:"目标客户类型",type:"text",ph:"如：进口商 / 五金连锁 / 家具体品牌",g:"市场定位"},
+    {k:"sellingPoint",t:"核心卖点",type:"textarea",g:"市场定位"},
+    {k:"demandLevel",t:"市场需求",type:"select",opts:ENUMS.HML,g:"竞争评估"},
+    {k:"priceComp", t:"价格竞争力",type:"select",opts:ENUMS.SMW,g:"竞争评估"},
+    {k:"supplyAdv", t:"供应链优势",type:"select",opts:ENUMS.SMW,g:"竞争评估"},
+    {k:"docLevel",  t:"产品资料完整度",type:"select",opts:ENUMS.DOC,g:"竞争评估"},
+    {k:"priority",  t:"开发优先级",type:"select",opts:ENUMS.ABC,g:"决策"},
+    {k:"isFeatured",t:"是否主推",  type:"select",opts:ENUMS.YESNO,hint:"AI 可提出建议，最终由 Linda 确认",g:"决策"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>{
+    const adv=aiFeaturedAdvice(o);
+    return '<div class="ainfo" style="margin-top:10px"><div class="h">🤖 AI 主推建议</div>'+
+      esc(adv.text)+'<div class="muted" style="margin-top:6px;font-size:11.5px">评分 '+adv.score+
+      " / 10 · 建议基于已录入数据计算，不会编造参数；最终由 Linda 确认。</div></div>";
+  },
+  related:[],
+  detailActions:o=>'<button class="btn btn-primary" data-act="adoptAdvice">按 AI 建议设为主推</button>'
+};
+
+/* ============================================================
+   五 · 产品知识库 Product Knowledge Base
+   ============================================================ */
+SCHEMA.kb={
+  view:"kb", name:"知识库条目", ico:"📚", key:"productId", keyLabel:"Product ID",
+  desc:"对产品池中的产品做深度补充；缺失字段统一显示 TBD / 待确认",
+  emptyTip:"暂无知识库条目",
+  tbd:true,
+  search:["productId","name","category","targetCustomerType","scenario","keywords","sellingPoint","targetMarket"],
+  filters:[{k:"targetMarket",t:"目标市场",opts:[]}],
+  cols:["name","category","targetCustomerType","scenario","targetMarket"],
+  heroKey:"image",
+  beforeSave:o=>{
+    const p=getProduct(o.productId);
+    if(!p) return;
+    o.name=o.name||p.name; o.image=o.image||p.image||null;
+    if(!o.material)   o.material=p.material;
+    if(!o.size)       o.size=p.size;
+    if(!o.surface)    o.surface=p.surface;
+    if(!o.moq)        o.moq=p.moq;
+    if(!o.priceInfo)  o.priceInfo=p.priceRange;
+  },
+  fields:[
+    {k:"productId",t:"Product ID",type:"selectdyn",optsFn:()=>{
+        const used=rd("kb",[]).map(k=>k.productId);
+        return productOpts().filter(o=>!used.includes(o.v)||o.v===(FORM&&FORM.productId));
+      },req:true,g:"产品基础"},
+    {k:"name",    t:"产品名称",  type:"auto",ro:true,g:"产品基础"},
+    {k:"image",   t:"产品图片",  type:"auto",ro:true,g:"产品基础"},
+    {k:"category",t:"产品类别",  type:"text",g:"产品基础"},
+    {k:"desc",    t:"产品描述",  type:"textarea",g:"产品基础"},
+    {k:"specParams",t:"规格参数",type:"textarea",hint:"没有资料请留空，系统显示 TBD",g:"技术参数"},
+    {k:"material",t:"材质",      type:"text",g:"技术参数"},
+    {k:"size",    t:"尺寸",      type:"text",g:"技术参数"},
+    {k:"surface", t:"表面处理",  type:"text",g:"技术参数"},
+    {k:"colors",  t:"可选颜色",  type:"text",g:"技术参数"},
+    {k:"moq",     t:"MOQ",       type:"text",g:"技术参数"},
+    {k:"priceInfo",t:"价格信息", type:"text",hint:"报价由 Linda 最终确认，AI 不得自行调整",g:"技术参数"},
+    {k:"packaging",t:"包装方式", type:"text",g:"技术参数"},
+    {k:"targetMarket",t:"目标市场",type:"text",g:"客户与市场"},
+    {k:"targetCustomerType",t:"目标客户类型",type:"text",g:"客户与市场"},
+    {k:"scenario",t:"应用场景",  type:"textarea",g:"客户与市场"},
+    {k:"sellingPoint",t:"核心卖点",type:"textarea",g:"客户与市场"},
+    {k:"painPoints",t:"客户痛点",type:"textarea",g:"客户与市场"},
+    {k:"diffVsCommon",t:"与普通产品的差异",type:"textarea",g:"客户与市场"},
+    {k:"customization",t:"可定制内容",type:"textarea",g:"客户与市场"},
+    {k:"drawing", t:"图纸",      type:"file",g:"附件资料"},
+    {k:"catalog", t:"产品目录",  type:"file",g:"附件资料"},
+    {k:"certs",   t:"认证/测试资料",type:"file",hint:"未取得的认证不得填写",g:"附件资料"},
+    {k:"media",   t:"产品图片/视频资料",type:"file",g:"附件资料"},
+    {k:"faq",     t:"常见客户问题 FAQ",type:"textarea",g:"开发素材"},
+    {k:"keywords",t:"推荐开发关键词",type:"textarea",hint:"用于 AI 匹配客户时的检索依据",g:"开发素材"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>{
+    const p=getProduct(o.productId);
+    const filled=SCHEMA.kb.fields.filter(f=>f.type!=="id"&&f.type!=="auto"&&f.type!=="file"&&o[f.k]).length;
+    const total =SCHEMA.kb.fields.filter(f=>f.type!=="id"&&f.type!=="auto"&&f.type!=="file").length;
+    return '<div class="chipbar" style="margin-top:8px">'+
+      '<span class="chip ghost">资料完整度 '+filled+" / "+total+"</span>"+
+      (p?'<span class="chip ghost" data-open="product:'+esc(p.productId)+'">查看产品池资料</span>':"")+
+      "</div>";
+  }
+};
+
+/* ============================================================
+   六 · 客户开发 Lead Development（含决策人）
+   ============================================================ */
+SCHEMA.lead={
+  view:"lead", name:"客户", ico:"🎯", key:"companyId", keyLabel:"Company ID",
+  desc:"AI 背调工作区：公司档案 → 产品匹配 → 决策人 → 开发信",
+  emptyTip:"暂无客户，可手动录入或后续从 LinkedIn / 展会 / 邮件导入",
+  idgen:()=>genId("C","lead","companyId",5),
+  search:["companyId","name","website","country","mainProducts","market","intro","mainBusiness","currentProducts"],
+  filters:[
+    {k:"aiStatus",t:"背调状态",opts:ENUMS.AISTATUS},
+    {k:"grade",   t:"客户等级",opts:ENUMS.ABC},
+    {k:"country", t:"国家/地区",opts:[]}
+  ],
+  cols:["name","country","type","mainProducts","source","matchScore","grade","aiStatus"],
+  fields:[
+    {k:"companyId",t:"Company ID",type:"id",ro:true,g:"客户档案"},
+    {k:"name",     t:"公司名称",  type:"text",req:true,g:"客户档案"},
+    {k:"website",  t:"官网",      type:"text",g:"客户档案"},
+    {k:"country",  t:"国家/地区", type:"text",g:"客户档案"},
+    {k:"type",     t:"公司类型",  type:"select",opts:ENUMS.CO_TYPE,g:"客户档案"},
+    {k:"mainProducts",t:"主营产品",type:"textarea",g:"客户档案"},
+    {k:"source",   t:"客户来源",  type:"select",opts:ENUMS.SRC,g:"客户档案"},
+    {k:"linkedin", t:"LinkedIn",  type:"text",g:"客户档案"},
+    {k:"size",     t:"公司规模",  type:"text",g:"客户档案"},
+    {k:"market",   t:"主要市场",  type:"text",g:"客户档案"},
+    {k:"intro",       t:"公司简介",    type:"textarea",g:"AI 背调"},
+    {k:"mainBusiness",t:"主要业务",    type:"textarea",g:"AI 背调"},
+    {k:"currentProducts",t:"当前销售产品",type:"textarea",g:"AI 背调"},
+    {k:"sellsHardware", t:"是否销售相关五金",type:"select",opts:ENUMS.YESNOWAIT,
+      hint:"不得仅因网站出现 hardware 就判断为目标客户，须依据实际业务判断",g:"AI 背调"},
+    {k:"mayBuy",       t:"可能采购的产品",type:"textarea",g:"AI 背调"},
+    {k:"matchPoints",  t:"与我司产品匹配点",type:"textarea",g:"AI 背调"},
+    {k:"recProductIds",t:"推荐 Product ID",type:"refmulti",optsFn:kbOpts,
+      hint:"只能从「产品知识库」中选择，不可自行编造产品",g:"AI 背调"},
+    {k:"recProductNames",t:"推荐产品",type:"auto",ro:true,fn:o=>recNames(o),g:"AI 背调"},
+    {k:"recReason",    t:"推荐理由",  type:"textarea",g:"AI 背调"},
+    {k:"painPoints",   t:"客户痛点",  type:"textarea",g:"AI 背调"},
+    {k:"opportunity",  t:"合作机会",  type:"textarea",g:"AI 背调"},
+    {k:"risks",        t:"风险点",    type:"textarea",g:"AI 背调"},
+    {k:"matchScore",   t:"客户匹配度",type:"select",opts:ENUMS.HML,g:"AI 背调"},
+    {k:"grade",        t:"客户等级",  type:"select",opts:ENUMS.ABC,g:"AI 背调"},
+    {k:"aiStatus",     t:"AI 背调状态",type:"select",opts:ENUMS.AISTATUS,g:"AI 背调"},
+    {k:"aiDate",       t:"背调日期",  type:"date",g:"AI 背调"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>{
+    const cs=contactsOf(o.companyId);
+    return '<div class="chipbar" style="margin-top:8px">'+
+      '<span class="chip ghost">决策人 '+contactsOf(o.companyId).filter(c=>c.isDecisionMaker==="是").length+" 人</span>"+
+      '<span class="chip ghost">联系人 '+cs.length+" 人</span>"+
+      (getCRM(o.companyId)?'<span class="chip">已进入 CRM</span>':'<span class="chip ghost">未进 CRM</span>')+
+      "</div>";
+  },
+  related:[
+    {fn:o=>contactBlock(o)},
+    {fn:o=>aiResultBlock(o)},
+    {fn:o=>emailBlock(o)}
+  ],
+  detailActions:o=>'<button class="btn btn-primary" data-act="aiResearch">🤖 AI 背调+匹配</button>'+
+    '<button class="btn btn-ghost" data-act="genEmail">✉ 生成 AI 开发信</button>'+
+    (getCRM(o.companyId)?'<button class="btn btn-ghost" data-act="goCRM">进入 CRM</button>'
+                        :'<button class="btn btn-primary" data-act="toCRM">➜ 转入 CRM</button>')
+};
+function recNames(o){
+  const ids=o.recProductIds||[];
+  if(!ids.length) return "未找到匹配产品";
+  return ids.map(id=>{const p=getProduct(id);return p?p.name:id;}).join("、");
+}
+
+/* ---------- 决策人（挂在 Company ID 下，不独立成页） ---------- */
+SCHEMA.contact={
+  name:"决策人", key:"id", keyLabel:"ID",
+  idgen:()=>uid(),
+  fields:[
+    {k:"name", t:"联系人姓名",type:"text",req:true,g:"联系人"},
+    {k:"title",t:"职位",      type:"text",g:"联系人"},
+    {k:"email",t:"邮箱",      type:"text",g:"联系人"},
+    {k:"phone",t:"电话",      type:"text",g:"联系人"},
+    {k:"linkedin",t:"LinkedIn",type:"text",g:"联系人"},
+    {k:"isDecisionMaker",t:"是否决策人",type:"select",opts:ENUMS.YESNO,g:"联系人"},
+    {k:"source",t:"联系人来源",type:"select",opts:ENUMS.CONTACT_SRC,g:"联系人"}
+  ],
+  search:["name","title","email","linkedin"],
+  cols:["name","title","email","phone","isDecisionMaker","source"],
+  keyLabel:"联系人 ID"
+};
+
+/* ============================================================
+   七 · 客户 CRM（继承 Company ID，不重新录入客户资料）
+   ============================================================ */
+SCHEMA.crm={
+  view:"crm", name:"CRM 客户", ico:"👥", key:"companyId", keyLabel:"Company ID",
+  desc:"继承客户开发模块数据，沉淀交易推进全过程",
+  emptyTip:"暂无 CRM 客户，请先在「客户开发」完成背调后转入",
+  search:["companyId","name","country","contactName","requirement","lastCommunication","stage"],
+  filters:[
+    {k:"stage",t:"当前阶段",opts:ENUMS.STAGE},
+    {k:"grade",t:"客户等级",opts:ENUMS.ABC}
+  ],
+  cols:["name","country","grade","contactName","stage","quoteStatus","sampleStatus","nextFollowDate","expectedAmount"],
+  beforeSave:o=>{
+    const c=getCompany(o.companyId);
+    if(c){ o.name=c.name; o.country=c.country; o.website=c.website; }
+    o.lastEditor="Linda";
+  },
+  fields:[
+    {k:"companyId",t:"Company ID",type:"selectdyn",optsFn:companyOpts,req:true,hint:"从客户开发模块继承，不重复录入",g:"客户资料（继承）"},
+    {k:"name",     t:"公司名称",  type:"auto",ro:true,g:"客户资料（继承）"},
+    {k:"country",  t:"国家",      type:"auto",ro:true,g:"客户资料（继承）"},
+    {k:"website",  t:"官网",      type:"auto",ro:true,g:"客户资料（继承）"},
+    {k:"grade",    t:"客户等级",  type:"select",opts:ENUMS.ABC,g:"客户资料（继承）"},
+    {k:"owner",    t:"客户负责人",type:"text",g:"对接"},
+    {k:"contactName",t:"联系人",  type:"selectdyn",optsFn:()=>contactsOfIds(),hint:"可选，取自决策人清单",g:"对接"},
+    {k:"contactTitle",t:"职位",   type:"auto",ro:true,fn:o=>contactInfo(o,"title"),g:"对接"},
+    {k:"email",    t:"邮箱",      type:"auto",ro:true,fn:o=>contactInfo(o,"email"),g:"对接"},
+    {k:"linkedin", t:"LinkedIn",  type:"auto",ro:true,fn:o=>contactInfo(o,"linkedin"),g:"对接"},
+    {k:"matchedProducts",t:"匹配产品 Product ID",type:"refmulti",optsFn:productOpts,g:"需求匹配"},
+    {k:"matchedProductNames",t:"匹配产品",type:"auto",ro:true,fn:o=>matchedNames(o),g:"需求匹配"},
+    {k:"requirement",t:"客户需求",type:"textarea",g:"需求匹配"},
+    {k:"stage",    t:"当前阶段",  type:"select",opts:ENUMS.STAGE,g:"推进"},
+    {k:"lastContactDate",t:"最近联系日期",type:"date",g:"推进"},
+    {k:"nextFollowDate", t:"下次跟进日期",type:"date",g:"推进"},
+    {k:"lastCommunication",t:"最后一次沟通内容",type:"textarea",g:"推进"},
+    {k:"replySummary",t:"客户回复摘要",type:"textarea",g:"推进"},
+    {k:"quoteStatus", t:"报价状态",type:"select",opts:ENUMS.QUOTE,g:"报价与样品"},
+    {k:"sampleStatus",t:"样品状态",type:"select",opts:ENUMS.SAMPLE,g:"报价与样品"},
+    {k:"expectedAmount",t:"预计订单金额",type:"number",g:"报价与样品"},
+    {k:"actualAmount",  t:"实际订单金额",type:"number",g:"报价与样品"},
+    {k:"researcher",t:"背调完成人",type:"text",g:"归属"},
+    {k:"lastEditor",t:"最后修改人",type:"auto",ro:true,fn:o=>o.lastEditor||"Linda",g:"归属"}
+  ],
+  title:o=>o.name,
+  heroExtra:o=>{
+    const c=getCompany(o.companyId);
+    return '<div class="chipbar" style="margin-top:8px">'+
+      (c?'<span class="chip ghost" data-open="lead:'+esc(c.companyId)+'">客户背调档案</span>':"")+
+      '<span class="chip ghost">跟进 '+tasksOf(o.companyId).length+" 次</span>"+
+      '<span class="chip ghost">开发信 '+emailsOf(o.companyId).length+" 封</span></div>";
+  },
+  related:[
+    {fn:o=>matchedProductCards(o)},
+    {fn:o=>timelineBlock(o)}
+  ],
+  detailActions:o=>'<button class="btn btn-primary" data-act="genEmailCRM">✉ 生成 AI 开发信</button>'+
+    '<button class="btn btn-ghost" data-act="logAct">＋ 记录一次沟通</button>'+
+    '<button class="btn btn-ghost" data-act="newTask">✓ 建立跟进任务</button>'
+};
+function contactsOfIds(){ return contactsOf(FORM&&FORM.companyId).map(c=>({v:c.name,t:c.name+(c.title?" · "+c.title:"")})); }
+function contactInfo(o,k){
+  const c=contactsOf(o.companyId).find(x=>x.name===o.contactName);
+  return c?(c[k]||""):"";
+}
+function matchedNames(o){
+  const ids=o.matchedProducts||[]; if(!ids.length) return "未匹配产品";
+  return ids.map(id=>{const p=getProduct(id);return p?p.name:id;}).join("、");
+}
+
+/* ============================================================
+   八 · 跟进任务 Follow-up
+   ============================================================ */
+SCHEMA.task={
+  view:"task", name:"跟进任务", ico:"✓", key:"taskId", keyLabel:"Task ID",
+  desc:"客户未回复 → 自动生成下一次跟进；客户一旦回复立即停止自动跟进并转 Linda 处理",
+  emptyTip:"暂无跟进任务，可在 CRM 客户详情页建立",
+  idgen:()=>genId("T","task","taskId",4),
+  search:["taskId","companyId","companyName","contactName","goal","aiContent","lastContactContent"],
+  filters:[
+    {k:"status",t:"执行状态",opts:ENUMS.TSTATUS},
+    {k:"replied",t:"客户是否回复",opts:ENUMS.YESNO},
+    {k:"method",t:"跟进方式",opts:ENUMS.METHOD}
+  ],
+  cols:["companyName","contactName","grade","stage","replied","followCount","nextDate","method","status"],
+  beforeSave:o=>{
+    const c=getCompany(o.companyId), m=getCRM(o.companyId);
+    if(c){ o.companyName=c.name; o.grade=c.grade||""; o.contactName=o.contactName||(contactsOf(o.companyId)[0]||{}).name||""; }
+    if(m) o.stage=m.stage||"";
+  },
+  fields:[
+    {k:"taskId",   t:"Task ID",  type:"id",ro:true,g:"任务"},
+    {k:"companyId",t:"Company ID",type:"selectdyn",optsFn:companyOpts,req:true,g:"任务"},
+    {k:"companyName",t:"公司名称",type:"auto",ro:true,g:"任务"},
+    {k:"contactName",t:"联系人",  type:"text",g:"任务"},
+    {k:"grade",    t:"客户等级",  type:"auto",ro:true,g:"任务"},
+    {k:"stage",    t:"当前 CRM 阶段",type:"auto",ro:true,g:"任务"},
+    {k:"lastContactDate",t:"上次联系日期",type:"date",g:"上次沟通"},
+    {k:"lastContactContent",t:"上次联系内容",type:"textarea",g:"上次沟通"},
+    {k:"replied",  t:"客户是否回复",type:"select",opts:ENUMS.YESNO,
+      hint:"一旦回复，自动跟进立即停止并转入人工处理队列",g:"上次沟通"},
+    {k:"followCount",t:"跟进次数",type:"number",g:"本次跟进"},
+    {k:"nextDate", t:"下次跟进日期",type:"date",g:"本次跟进"},
+    {k:"method",   t:"跟进方式",  type:"select",opts:ENUMS.METHOD,g:"本次跟进"},
+    {k:"goal",     t:"本次跟进目标",type:"textarea",g:"本次跟进"},
+    {k:"aiSuggestion",t:"AI 建议",type:"textarea",g:"AI 建议"},
+    {k:"aiContent",t:"AI 生成跟进内容",type:"textarea",g:"AI 建议"},
+    {k:"status",   t:"执行状态",  type:"select",opts:ENUMS.TSTATUS,g:"执行"}
+  ],
+  title:o=>o.taskId+" · "+(o.companyName||""),
+  heroExtra:o=>{
+    const due=(o.nextDate&&o.nextDate<=today()&&o.status==="待处理");
+    return '<div class="chipbar" style="margin-top:8px">'+
+      (due?'<span class="chip">今日需跟进</span>':'<span class="chip ghost">计划中</span>')+
+      (o.replied==="是"?'<span class="chip">客户已回复 · 待 Linda 处理</span>':"")+
+      "</div>";
+  },
+  related:[
+    {fn:o=>{
+      const m=getCRM(o.companyId); if(!m) return "";
+      return '<div class="sec-title">客户当前状态</div><div class="kvgrid">'+
+        kvWithTbd("CRM 阶段",m.stage)+kvWithTbd("客户需求",m.requirement)+
+        kvWithTbd("报价状态",m.quoteStatus)+kvWithTbd("样品状态",m.sampleStatus)+"</div>";
+    }}
+  ],
+  detailActions:o=>'<button class="btn btn-primary" data-act="genFollow">🤖 生成 AI 跟进内容</button>'+
+    '<button class="btn btn-ghost" data-act="replyYes">✋ 客户已回复（转人工）</button>'+
+    '<button class="btn btn-ghost" data-act="doneNext">✓ 完成并生成下一次</button>'
+};
+
+</script>
+<script>
+/* ============================================================
+   业务层：路由 / 数据看板 / AI 规则引擎 / 关联区块
+   AI 安全底线：只读取系统里已经存在的数据，
+   找不到的信息显示「未找到」，参数缺失显示「TBD」，
+   绝不编造尺寸/材质/认证/联系人/邮箱/价格/产能。
+   ============================================================ */
+let state={ view:"dashboard", search:"", supplierFilter:null, focusId:null, stageFilter:null };
+
+const NAV=[
+  {type:"group",t:"核心数据"},
+  {v:"dashboard",n:"数据看板",ico:"▦"},
+  {v:"factory",  n:"工厂管理",ico:"🏭",tag:"核心"},
+  {v:"product",  n:"产品池",  ico:"📦",tag:"核心"},
+  {type:"group",t:"产品策略"},
+  {v:"featured", n:"主推产品",ico:"⭐"},
+  {v:"kb",       n:"产品知识库",ico:"📚"},
+  {type:"group",t:"客户开发"},
+  {v:"lead",     n:"客户开发",ico:"🎯",tag:"AI"},
+  {v:"crm",      n:"客户CRM",ico:"👥"},
+  {v:"task",     n:"跟进任务",ico:"✓"}
+];
+const TITLES={
+  dashboard:["数据看板","打开就知道业务全貌：库存、漏斗、今日待办"],
+  factory:  ["工厂管理 Supplier Database","11 字段 · 一个工厂关联多个产品"],
+  product:  ["产品池 Product Pool","12 字段 · 图片 / 图纸上传"],
+  featured: ["主推产品","从产品池筛选值得重点开发的产品 · AI 建议 + Linda 确认"],
+  kb:       ["产品知识库 Product Knowledge Base","深度补充 · 缺失统一显示 TBD / 待确认"],
+  lead:     ["客户开发 Lead Development","AI 背调 → 产品匹配 → 决策人 → 开发信"],
+  crm:      ["客户 CRM","9 阶段推进 · 完整沟通时间线"],
+  task:     ["跟进任务 Follow-up","自动续跟进 · 客户回复即转人工"]
+};
+const VIEWKEY={dashboard:null,factory:"factory",product:"product",featured:"featured",
+  kb:"kb",lead:"lead",crm:"crm",task:"task"};
+
+function go(view,opts={}){
+  state.view=view;
+  ["supplierFilter","focusId","stageFilter"].forEach(k=>{ state[k]=opts[k]!==undefined?opts[k]:null; });
+  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("active",a.dataset.view===view));
+  $("#pageTitle").textContent=TITLES[view][0];
+  $("#pageCrumb").textContent=TITLES[view][1];
+  $("#addBtn").style.display=(view==="dashboard")?"none":"inline-flex";
+  render();
+}
+function SCHEMA_KEYS(){ return Object.keys(SCHEMA); }
+
+function render(){
+  const c=$("#content");
+  try{
+    if(state.view==="dashboard") return renderDashboard(c);
+    return renderList(VIEWKEY[state.view]);
+  }catch(err){
+    c.innerHTML='<div class="empty"><div class="big">⚠</div><div>页面渲染出错：'+esc(err.message)+
+      '</div><div class="muted" style="margin-top:8px">请刷新页面（F5）重试</div></div>';
+  }
+}
+
+/* ---------- 常用统计口径 ---------- */
+function hasDM(c){ return contactsOf(c.companyId).some(x=>x.isDecisionMaker==="是"); }
+function hasSent(c){ return emailsOf(c.companyId).some(e=>e.status==="已发送"); }
+function hasReplied(c){
+  return actsOf(c.companyId).some(a=>a.type==="客户回复") || tasksOf(c.companyId).some(t=>t.replied==="是");
+}
+function stageOf(c){ const m=getCRM(c.companyId); return m?(m.stage||"待开发"):"待开发"; }
+function stageIdx(st){ return ENUMS.STAGE.indexOf(st); }
+function primaryContact(cid){
+  const cs=contactsOf(cid);
+  return cs.find(x=>x.isDecisionMaker==="是")||cs[0]||null;
+}
+
+/* 客户在漏斗中到达的最远节点（0…10） */
+const FUNNEL=["待开发","已背调","已匹配产品","已找到决策人","已发送","已回复","需求确认","已报价","样品","谈判","成交"];
+function funnelReach(c){
+  let i=0;
+  if(c.aiStatus && c.aiStatus!=="未背调") i=Math.max(i,1);
+  if((c.recProductIds||[]).length)        i=Math.max(i,2);
+  if(hasDM(c))                            i=Math.max(i,3);
+  if(hasSent(c))                          i=Math.max(i,4);
+  if(hasReplied(c))                       i=Math.max(i,5);
+  const si=stageIdx(stageOf(c));
+  if(si>=stageIdx("需求确认")) i=Math.max(i,6);
+  if(si>=stageIdx("已报价"))   i=Math.max(i,7);
+  if(si>=stageIdx("样品"))     i=Math.max(i,8);
+  if(si>=stageIdx("谈判"))     i=Math.max(i,9);
+  if(si>=stageIdx("成交"))     i=Math.max(i,10);
+  return i;
+}
+
+/* ============================================================
+   一 · 数据看板
+   ============================================================ */
+function renderDashboard(c){
+  const F=rd("factory",[]), P=rd("product",[]), FT=rd("featured",[]), KB=rd("kb",[]),
+        LD=rd("lead",[]), CM=rd("crm",[]), TK=rd("task",[]);
+  c.innerHTML="";
+
+  /* ---- 顶部核心数据 ---- */
+  const s=[
+    {k:"工厂总数",   v:F.length,  unit:"家", to:["factory"]},
+    {k:"产品总数",   v:P.length,  unit:"个", to:["product"]},
+    {k:"主推产品数量",v:FT.filter(f=>f.isFeatured==="是").length, unit:"个", to:["featured"]},
+    {k:"待开发客户", v:LD.filter(x=>!getCRM(x.companyId)).length, unit:"家", to:["lead"]},
+    {k:"A级客户",    v:LD.filter(x=>x.grade==="A").length, unit:"家", to:["lead"]},
+    {k:"已找到决策人客户",v:LD.filter(hasDM).length, unit:"家", to:["lead"]},
+    {k:"已发送开发信客户",v:LD.filter(hasSent).length, unit:"家", to:["crm"]},
+    {k:"待跟进客户", v:[...new Set(TK.filter(t=>t.status==="待处理").map(t=>t.companyId))].length, unit:"家", to:["task"]},
+    {k:"已回复客户", v:LD.filter(hasReplied).length, unit:"家", to:["crm"]},
+    {k:"报价客户",   v:CM.filter(m=>["已报价","已确认价格"].includes(m.quoteStatus)||stageIdx(m.stage)>=stageIdx("已报价")).length, unit:"家", to:["crm"]},
+    {k:"样品客户",   v:CM.filter(m=>!["未寄样","",null].includes(m.sampleStatus)||stageIdx(m.stage)>=stageIdx("样品")).length, unit:"家", to:["crm"]},
+    {k:"谈判客户",   v:CM.filter(m=>["谈判","成交"].includes(m.stage)).length, unit:"家", to:["crm"]},
+    {k:"成交客户",   v:CM.filter(m=>m.stage==="成交").length, unit:"家", to:["crm"]}
+  ];
+  const stats=el("div","stats");
+  stats.innerHTML=s.map(x=>'<div class="stat" data-nav="'+x.to[0]+'"><div class="k">'+esc(x.k)+
+    '</div><div class="v">'+x.v+"<small> "+esc(x.unit)+"</small></div></div>").join("");
+  c.appendChild(stats);
+
+  /* ---- 今日待办 ---- */
+  const needResearch=LD.filter(x=>!x.aiStatus||x.aiStatus==="未背调");
+  const needEmail   =LD.filter(x=>hasDM(x)&&(x.recProductIds||[]).length&&!hasSent(x));
+  const needFollow  =TK.filter(t=>t.status==="待处理"&&(!t.nextDate||t.nextDate<=today())&&t.replied!=="是");
+  const needHuman   =rd("act",[]).filter(a=>a.type==="客户回复"&&!a.handled);
+  const p1=el("div","panel");
+  p1.innerHTML='<h3><span class="dot"></span>今日待办<span class="r">'+today()+"</span></h3>";
+  const todos=el("div","todos");
+  const cards=[
+    {n:needResearch.length,t:"今日需要背调客户",d:"AI 背调 + 产品匹配",to:["lead"],hot:needResearch.length>0},
+    {n:needEmail.length,   t:"今日需要发送开发信",d:"已有决策人 + 已匹配产品",to:["lead"],hot:needEmail.length>0},
+    {n:needFollow.length,  t:"今日需要跟进客户",d:"到期或已逾期的跟进任务",to:["task"],hot:needFollow.length>0},
+    {n:needHuman.length,   t:"今日需要人工处理的客户回复",d:"客户已回复，AI 已停止自动跟进",to:["crm"],hot:needHuman.length>0}
+  ];
+  todos.innerHTML=cards.map(x=>'<div class="todo'+(x.hot?" hot":"")+'" data-nav="'+x.to[0]+'"><div class="n">'+x.n+
+    '</div><div class="t">'+esc(x.t)+'</div><div class="d">'+esc(x.d)+"</div></div>").join("");
+  p1.appendChild(todos);
+  const list=el("div","muted");
+  list.style.cssText="margin-top:12px;font-size:12.5px;line-height:1.9";
+  list.innerHTML=[
+    needResearch.length?"<b>待背调：</b>"+needResearch.slice(0,4).map(x=>esc(x.name||x.companyId)).join("、")+(needResearch.length>4?" 等 "+needResearch.length+" 家":""):"",
+    needFollow.length ?"<b>待跟进：</b>"+needFollow.slice(0,4).map(t=>esc(t.companyName||t.companyId)+"（"+esc(t.nextDate||"未设日期")+"）").join("、"):"",
+    needHuman.length  ?"<b>已回复待处理：</b>"+needHuman.slice(0,4).map(a=>esc(a.title||"")).join("、"):""
+  ].filter(Boolean).join("<br>")||"暂无到期任务，可先在「客户开发」录入新客户。";
+  p1.appendChild(list);
+  c.appendChild(p1);
+
+  /* ---- 客户开发漏斗 ---- */
+  const p2=el("div","panel");
+  p2.innerHTML='<h3><span class="dot"></span>客户开发漏斗<span class="r">共 '+LD.length+" 家客户（按到达节点去重累计）</span></h3>";
+  const counts=FUNNEL.map((_,i)=>LD.filter(x=>funnelReach(x)>=i).length);
+  const fw=el("div","funnel");
+  FUNNEL.forEach((name,i)=>{
+    const d=el("div","fstep"+(counts[i]?" on":""));
+    d.innerHTML='<div class="n">'+counts[i]+'</div><div class="t">'+esc(name)+"</div>";
+    fw.appendChild(d);
+    if(i<FUNNEL.length-1) fw.appendChild(el("span","farr","→"));
+  });
+  p2.appendChild(fw);
+  c.appendChild(p2);
+
+  /* ---- 最近动态 ---- */
+  const p3=el("div","panel");
+  p3.innerHTML='<h3><span class="dot"></span>最近动态<span class="r">沟通 / 开发信 / 任务 汇总</span></h3>';
+  const acts=[...rd("act",[])].sort((a,b)=>(b.at||"").localeCompare(a.at||"")||(b.ts||0)-(a.ts||0)).slice(0,8);
+  if(!acts.length) p3.appendChild(el("div","muted","暂无动态记录。"));
+  else{
+    const tl=el("div","tl");
+    acts.forEach(a=>{
+      const i=el("div","tli "+(a.type==="客户回复"?"green":a.type==="开发信"?"blue":""));
+      i.innerHTML='<div class="h">'+esc(a.title||"")+'</div><div class="m">'+esc(a.at||"")+" · "+
+        esc((getCompany(a.companyId)||{}).name||a.companyId)+'</div>'+
+        (a.detail?'<div class="b">'+esc(a.detail)+"</div>":"");
+      tl.appendChild(i);
+    });
+    p3.appendChild(tl);
+  }
+  c.appendChild(p3);
+
+  /* ---- AI 规则 & 数据备份 ---- */
+  const p4=el("div","panel");
+  p4.innerHTML='<h3><span class="dot"></span>AI 安全规则 · 数据备份</h3>';
+  const box=el("div");
+  box.style.cssText="display:flex;gap:10px;flex-wrap:wrap;align-items:center";
+  const exp=el("button","btn btn-ghost","⬇ 导出全部数据 (JSON)"); exp.onclick=exportData;
+  const imp=el("button","btn btn-ghost","⬆ 导入数据 (JSON)");
+  imp.onclick=()=>{ const i=document.createElement("input"); i.type="file"; i.accept=".json";
+    i.onchange=e=>{ if(e.target.files[0]) importData(e.target.files[0]); }; i.click(); };
+  const mode=(rd("settings",{})||{}).sendMode||"人工确认";
+  const tg=el("button","btn btn-ghost","发送模式："+mode);
+  tg.onclick=()=>{ const st=rd("settings",{})||{}; st.sendMode=(st.sendMode==="自动发送")?"人工确认":"自动发送";
+    wr("settings",st); toast("AI 邮件发送模式已切换为："+st.sendMode); render(); };
+  box.appendChild(exp); box.appendChild(imp); box.appendChild(tg);
+  p4.appendChild(box);
+  const note=el("div","muted");
+  note.style.cssText="margin-top:10px;font-size:12px;line-height:1.8";
+  note.innerHTML="AI 只能读取系统内已存在的数据：找不到的信息显示「未找到」，参数缺失统一显示「<span class='tbd'>TBD / 待确认</span>」；"+
+    "不得编造尺寸、材质、承重、认证、MOQ、价格、交期、产能、联系人与邮箱；报价必须由 Linda 最终确认；"+
+    "客户一旦回复，自动跟进立即停止并转入人工处理队列。<br>数据已同步云端服务器，任意设备打开网址都是同一份。";
+  p4.appendChild(note);
+  c.appendChild(p4);
+}
+
+/* ============================================================
+   AI · 主推建议（基于已录入数据计算，不编造任何参数）
+   ============================================================ */
+function aiFeaturedAdvice(o){
+  const m=(arr,v)=>{ const i=arr.indexOf(v); return i<0?0:arr.length-i; };
+  let score=0;
+  score+=({ "高":3,"中":2,"低":0 })[o.demandLevel]||0;
+  score+=({ "强":3,"中":2,"弱":0 })[o.priceComp]  ||0;
+  score+=({ "强":2,"中":1,"弱":0 })[o.supplyAdv]  ||0;
+  score+=({ "完整":2,"部分":1,"缺失":0 })[o.docLevel]||0;
+  let text;
+  if(score>=7) text="建议列入主推：市场需求、价格竞争力与供应链优势表现均衡，值得优先投入客户开发。";
+  else if(score>=4) text="建议保持观察：具备一定基础，但仍有短板（资料完整度或价格竞争力），建议先补齐资料再判断是否主推。";
+  else text="建议暂缓：现有录入数据不足以支撑优先开发，请补充知识库资料并确认价格/交期后再评估。";
+  return {score,text,advice:score>=7?"是":(score>=4?"观察":"否")};
+}
+
+/* ============================================================
+   AI · 背调 + 产品匹配
+   只做「读取已有数据 → 结构化整理 → 按关键词匹配知识库」，
+   公司信息来自 Linda 录入内容，知识库来自 SYSTEM 内数据。
+   ============================================================ */
+function tokens(s){
+  return (s||"").toLowerCase().split(/[^a-z0-9\u4e00-\u9fa5]+/).filter(w=>w.length>=2||/[a-z]/i.test(w));
+}
+/* 关键词重叠（双向包含，兼容单复数/词根差异），只用于判断「是否真的存在重合」 */
+function overlapHits(kbTokens, clientTokens){
+  const hit=[];
+  kbTokens.forEach(k=>{
+    if(k.length<2) return;
+    if(clientTokens.some(c=>c.length>=2 && (c.includes(k)||k.includes(c)))) hit.push(k);
+  });
+  return [...new Set(hit)];
+}
+function aiResearch(companyId){
+  const leads=rd("lead",[]); const c=leads.find(x=>x.companyId===companyId); if(!c) return;
+  const kbs=rd("kb",[]);
+  /* 客户侧文本：只取已录入内容 */
+  const clientText=[c.name,c.mainProducts,c.intro,c.mainBusiness,c.currentProducts,c.market,c.mayBuy].join(" ");
+  const ct=tokens(clientText);
+
+  const scored=kbs.map(k=>{
+    const p=getProduct(k.productId)||{};
+    const seed=[k.keywords,k.scenario,k.targetCustomerType,k.category,k.sellingPoint,k.painPoints,
+                p.name,p.category,p.material,p.surface].join(" ");
+    const hits=overlapHits(tokens(seed),ct);
+    let score=hits.length;
+    const client=[...ct].join(" ");
+    if(k.targetMarket && tokens(k.targetMarket).some(w=>client.includes(w))) score+=1;
+    if(p.market && tokens(p.market).some(w=>client.includes(w))) score+=1;
+    return {k,p,score,hits};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,3);
+
+  if(!kbs.length || !scored.length){
+    c.recProductIds=[];
+    c.recReason="未找到匹配产品：产品知识库中暂无与客户业务重合的内容，请先补充知识库或由 Linda 人工判断。";
+    c.matchScore="低"; c.grade="C"; c.aiStatus="AI 已背调"; c.aiDate=today();
+    c.opportunity=c.opportunity||"暂无足够数据判断合作机会。";
+    wr("lead",leads);
+    toast("AI 背调完成：未找到匹配产品");
+    return;
+  }
+  c.recProductIds=scored.map(x=>x.k.productId);
+  const names=scored.map(x=>(x.p.name||x.k.name||x.k.productId));
+  c.recReason="匹配依据（全部来自产品知识库与客户已录入信息，未使用任何推测）：\n"+
+    scored.map(x=>"· "+x.k.productId+" · "+esc0(x.p.name||"")+"｜命中关键词："+
+      (x.hits.length?x.hits.join("、"):"目标市场一致")).join("\n");
+  c.mayBuy=c.mayBuy||names.join("、");
+  c.matchPoints=c.matchPoints|| names.join("、")+" 与客户主营产品线存在重合";
+  const top=scored[0].score;
+  c.matchScore = top>=4?"高":(top>=2?"中":"低");
+  c.grade      = top>=4?"A":(top>=2?"B":"C");
+  c.aiStatus="AI 已背调"; c.aiDate=today();
+  wr("lead",leads);
+  toast("AI 背调完成：已匹配 "+scored.length+" 个产品");
+}
+function esc0(s){ return s||""; }
+
+/* ============================================================
+   AI · 开发信生成（读取：背调 + 决策人 + 匹配产品 + 知识库 + 历史沟通）
+   规则：简短 / 从客户角度 / 不堆砌公司介绍 / 不用 high quality、best price / 低压力 CTA
+   ============================================================ */
+function genEmailContent(companyId){
+  const c=getCompany(companyId); const ct=primaryContact(companyId);
+  const m=getCRM(companyId);
+  const ids=(c&&c.recProductIds&&c.recProductIds.length)?c.recProductIds:((m&&m.matchedProducts)||[]);
+  const kb=ids.map(getKB).filter(Boolean)[0];
+  const p =kb?getProduct(kb.productId):null;
+  const prodName=p?p.name:(kb?(kb.name||""):"");
+  const history=[...actsOf(companyId)].sort((a,b)=>(b.at||"").localeCompare(a.at||"")).slice(0,1)[0];
+
+  const hi=ct&&ct.name?("Hi "+ct.name.split(" ")[0]+","):"Hi there,";
+  const why=c&&(c.mainProducts||c.currentProducts)
+    ? "I saw "+c.name+" is focused on "+firstSentence(c.mainProducts||c.currentProducts)+" in "+(c.market||"your market")+"."
+    : "I came across "+c.name+" while researching distributors in "+(c.market||"your market")+".";
+  const value=kb
+    ? [kb.sellingPoint, kb.diffVsCommon, kb.scenario].filter(Boolean).join(" ")
+    : "";
+  const spec=(p&&(p.material||p.size||p.surface||p.moq))
+    ? "Specs on record: "+[p.model,p.material,p.size,p.surface,p.moq?"MOQ "+p.moq:""].filter(Boolean).join(" / ")+"."
+    : "Detailed specs are available on request (TBD until confirmed).";
+  const angle=history&&history.detail
+    ? "Following our last exchange about "+(history.title||"your sourcing plan")+", "
+    : "";
+  const subject=prodName
+    ? (c.name||"Your company")+" × "+prodName+" — spec sheet & samples?"
+    : (c.name||"Your company")+" — a quick question on your product line";
+  const body=[
+    hi,"",
+    why,
+    value?("That is why I am reaching out: "+value+"."):"",
+    spec,
+    kb&&kb.painPoints?("Many customers in this range care about: "+kb.painPoints+"."):"",
+    angle+"If it makes sense, I can send the spec sheet and 2 units for evaluation — no commitment needed.",
+    "",
+    "Best regards,",
+    "Linda"
+  ].filter(Boolean).join("\n");
+  return {to:ct?(ct.email||""):"",contact:ct?(ct.name||""):"",subject,
+    body:body.replace(/high quality|best price/gi,"competitive and stable supply")};
+}
+function firstSentence(s){ return String(s||"").split(/[，,;；\n]/)[0].trim(); }
+
+function openEmailModal(companyId){
+  const g=genEmailContent(companyId);
+  const st=rd("settings",{})||{};
+  openModal(
+    '<div class="modal-head"><div><h3>✉ AI 开发信</h3><div class="sub">读取：背调 + 决策人 + 匹配产品 + 知识库 + 历史沟通</div></div>'+
+      '<span class="x" data-act="close">×</span></div>'+
+    '<div class="modal-body">'+
+      '<div class="ainfo" style="margin-bottom:12px"><div class="h">生成原则已自动应用</div>'+
+      "简短 · 从客户角度写 · 不堆砌公司介绍 · 不使用 high quality / best price · "+
+      "说明为什么联系这家客户 · 低压力 CTA（先寄规格书/样品，不要求承诺）</div>"+
+      '<div class="field"><label>收件人</label><input id="emTo" value="'+esc(g.to)+'"></div>'+
+      '<div class="field" style="margin-top:10px"><label>标题</label><input id="emSub" value="'+esc(g.subject)+'"></div>'+
+      '<div class="field" style="margin-top:10px"><label>正文</label><textarea id="emBody" rows="14" style="min-height:220px">'+esc(g.body)+"</textarea></div>"+
+    "</div>"+
+    '<div class="modal-foot"><span class="left muted" style="align-self:center;font-size:12px">'+
+      "当前发送模式：<b>"+esc(st.sendMode||"人工确认")+"</b></span>"+
+      '<button class="btn btn-ghost" data-act="close">取消</button>'+
+      '<button class="btn btn-ghost" id="emDraft">存为草稿并记录</button>'+
+      '<button class="btn btn-primary" id="emSend">'+((st.sendMode==="自动发送")?"确认发送":"人工确认并发送")+"</button></div>",
+    "wide");
+  function grab(){ return {to:$("#emTo").value,subject:$("#emSub").value,body:$("#emBody").value}; }
+  function save(status){
+    const d=grab();
+    const arr=rd("email",[]);
+    arr.push({id:uid(),companyId,to:d.to,subject:d.subject,body:d.body,at:today(),status,ts:Date.now()});
+    wr("email",arr);
+    addAct(companyId,"开发信",d.subject,"发送至 "+(d.to||"（待确认邮箱）")+" · "+(status==="已发送"?"已发送":"草稿待确认"));
+    closeModal(); toast(status==="已发送"?"开发信已发送并记录到时间线":"已存为草稿并记录到时间线");
+    if(state.view==="lead"||state.view==="crm") render();
+  }
+  $("#emDraft").onclick=()=>save("草稿");
+  $("#emSend").onclick =()=>save("已发送");
+}
+
+/* ============================================================
+   AI · 跟进内容生成（结合客户业务 / 上次推荐产品 / 新价值点）
+   ============================================================ */
+function genFollowContent(t){
+  const c=getCompany(t.companyId); const ct=primaryContact(t.companyId);
+  const ids=(c&&c.recProductIds)||[]; const kb=ids.map(getKB).filter(Boolean)[0];
+  const p=kb?getProduct(kb.productId):null;
+  const n=(t.followCount||0)+1;
+  const angles=[
+    "ask how they currently source this range and who they compare us with",
+    "share the spec sheet + propose 2 units for internal evaluation",
+    "update them on the other items we build for the same category",
+    "check whether they have any project or season plan coming up for this line",
+    "close the loop politely: put the file on hold until their next purchase cycle"
+  ];
+  const angle=angles[Math.min(n-1,angles.length-1)];
+  const hi=ct&&ct.name?("Hi "+ct.name.split(" ")[0]+","):"Hi there,";
+  const bus=c?(c.mainProducts||c.mainBusiness||"your product range"):"your product range";
+  const value=kb?[kb.sellingPoint,kb.diffVsCommon,kb.painPoints].filter(Boolean).join(" "):"";
+  const prod=p?p.name:(kb?kb.name:"");
+  const body=[
+    hi,"",
+    "Quick follow-up on "+(prod||"our previous exchange")+" for "+bus+".",
+    value?("One point that may help on your side: "+value+"."):"",
+    t.lastContactContent?("Last time we discussed: "+firstSentence(t.lastContactContent)+"."):"",
+    "No pressure either way — just tell me the angle that works for you.",
+    "",
+    "Best regards,",
+    "Linda"
+  ].filter(Boolean).join("\n");
+  return {suggestion:"第 "+n+" 次跟进 · 目标："+esc(angle)+
+    "｜客户等级 "+(t.grade||"—")+" · CRM 阶段 "+(t.stage||"—"),
+    body:body.replace(/did you see my last email/gi,"a quick follow-up")};
+}
+
+function nextGap(grade){ return ({A:3,B:5,C:7})[grade]||7; }
+
+/* ============================================================
+   关联区块：决策人 / AI 结论 / 开发信 / 匹配产品 / 时间线
+   ============================================================ */
+function contactBlock(o){
+  const cs=contactsOf(o.companyId);
+  let h='<div class="sec-title">决策人 / 联系人（'+cs.length+"）</div>";
+  if(!cs.length) h+='<div class="muted">暂无联系人。<b>AI 不得虚构联系人与邮箱</b>，请通过官网 / LinkedIn / 展会确认后录入。</div>'+
+    '<div style="margin-top:8px"><button class="btn btn-ghost btn-sm" data-act="addContact">＋ 新增联系人</button></div>';
+  else{
+    h+='<div class="tablewrap"><table><thead><tr><th>姓名</th><th>职位</th><th>邮箱</th><th>电话</th>'+
+      '<th>LinkedIn</th><th>是否决策人</th><th>来源</th><th></th></tr></thead><tbody>'+
+      cs.map(c=>"<tr><td><b>"+esc(c.name)+"</b></td><td>"+esc(c.title||"—")+"</td><td>"+esc(c.email||"—")+
+        "</td><td>"+esc(c.phone||"—")+"</td><td>"+esc(c.linkedin||"—")+"</td><td>"+badge(c.isDecisionMaker)+
+        '</td><td>'+esc(c.source||"—")+'</td><td><div class="row-actions">'+
+        '<button class="btn btn-ghost btn-sm" data-editcontact="'+esc(c.id)+'">编辑</button>'+
+        '<button class="btn btn-danger btn-sm" data-delcontact="'+esc(c.id)+'">删除</button></div></td></tr>').join("")+
+      "</tbody></table></div>"+
+      '<div style="margin-top:8px"><button class="btn btn-ghost btn-sm" data-act="addContact">＋ 新增联系人</button></div>';
+  }
+  return h;
+}
+
+function aiResultBlock(o){
+  return '<div class="sec-title">AI 背调结论</div><div class="ainfo">'+
+    '<div class="h">匹配度：'+esc(o.matchScore||"—")+" ｜ 推荐等级："+esc(o.grade||"—")+" ｜ 状态："+esc(o.aiStatus||"未背调")+"</div>"+
+    '<div style="margin-top:6px"><b>推荐产品：</b>'+esc(recNames(o))+"</div>"+
+    (o.recReason?'<div style="margin-top:6px;white-space:pre-wrap">'+esc(o.recReason)+"</div>":"")+
+    (o.painPoints?'<div style="margin-top:6px"><b>客户痛点：</b>'+esc(o.painPoints)+"</div>":"")+
+    (o.risks?'<div style="margin-top:6px"><b>风险点：</b>'+esc(o.risks)+"</div>":"")+
+    '<div class="muted" style="margin-top:8px;font-size:11.5px">结论仅基于系统内已有数据生成；'+
+    "缺失信息一律显示「未找到」，不得编造。</div>"+
+    '<div style="margin-top:8px"><button class="btn btn-primary btn-sm" data-act="aiResearch">🤖 重新 AI 背调+匹配</button></div>'+
+    "</div>";
+}
+
+function emailBlock(o){
+  const es=emailsOf(o.companyId);
+  if(!es.length) return '<div class="sec-title">开发信</div><div class="muted">尚未生成开发信。</div>';
+  return '<div class="sec-title">开发信（'+es.length+"）</div>"+
+    es.sort((a,b)=>(b.ts||0)-(a.ts||0)).map(e=>
+      '<div class="relcard" style="width:100%;margin-bottom:8px"><div class="n" style="font-size:12.5px">'+esc(e.subject)+
+      '</div><div class="i" style="color:var(--muted)">'+esc(e.at)+" · "+esc(e.to||"无收件邮箱")+" · "+badge(e.status)+"</div></div>").join("");
+}
+
+function matchedProductCards(o){
+  const ids=o.matchedProducts||[];
+  if(!ids.length) return '<div class="sec-title">匹配产品</div><div class="muted">未匹配产品（未找到）</div>';
+  return '<div class="sec-title">匹配产品（'+ids.length+'）</div><div class="relgrid">'+
+    ids.map(id=>{ const p=getProduct(id); return '<div class="relcard" data-goproduct="'+esc(id)+'">'+
+      (p?pThumb(p):'<div class="noimg">未找到</div>')+
+      '<div class="n">'+esc(p?p.name:"（产品已删除）")+'</div><div class="i">'+esc(id)+"</div></div>"; }).join("")+"</div>";
+}
+
+function timelineBlock(o){
+  const items=[];
+  actsOf(o.companyId).forEach(a=>items.push({at:a.at,ts:a.ts||0,type:a.type,title:a.title,sub:a.detail,cls:
+    a.type==="客户回复"?"green":(a.type==="开发信"?"blue":"")}));
+  emailsOf(o.companyId).forEach(e=>items.push({at:e.at,ts:e.ts||0,type:"开发信",title:e.subject,
+    sub:"发送至 "+(e.to||"—")+" · "+e.status,cls:"blue"}));
+  tasksOf(o.companyId).forEach(t=>items.push({at:t.nextDate,ts:t.ts||0,type:"跟进任务",title:t.taskId+" · "+t.method,
+    sub:(t.aiContent||t.goal||"").slice(0,160),cls:t.replied==="是"?"green":""}));
+  if(!items.length) return '<div class="sec-title">完整时间线</div><div class="muted">暂无记录。开发 → 发信 → 回复 → 报价 → 样品 → 谈判 → 订单 会全部沉淀在这里。</div>';
+  items.sort((a,b)=>((b.at||"").localeCompare(a.at||""))||(b.ts-a.ts));
+  return '<div class="sec-title">完整时间线（开发 → 回复 → 报价 → 样品 → 谈判 → 订单）</div><div class="tl">'+
+    items.map(i=>'<div class="tli '+(i.cls||"")+'"><div class="h">'+esc(i.title||"")+'</div>'+
+      '<div class="m">'+esc(i.at||"—")+" · "+esc(i.type)+"</div>"+
+      (i.sub?'<div class="b">'+esc(i.sub)+"</div>":"")+"</div>").join("")+"</div>";
+}
+
+/* ---------- 通用动作辅助 ---------- */
+function addAct(companyId,type,title,detail){
+  const arr=rd("act",[]);
+  arr.push({id:uid(),companyId,type,title,detail,at:today(),ts:Date.now()});
+  wr("act",arr);
+}
+function openCRM(id){
+  if(!getCRM(id)){ toast("该客户尚未进入 CRM"); openDetail("lead",id); return; }
+  openDetail("crm",id);
+}
+
+</script>
+<script>
+/* ============================================================
+   启动层：导航渲染 / 搜索 / 业务动作 / 备份 / 初始化
+   ============================================================ */
+
+/* ---------- 侧边栏导航 ---------- */
+$("#nav").innerHTML=NAV.map(item=>{
+  if(item.type==="group") return '<div class="group">'+esc(item.t)+"</div>";
+  return '<a data-view="'+item.v+'"><span class="ico">'+item.ico+"</span>"+esc(item.n)+
+    (item.tag?'<span class="tag">'+esc(item.tag)+"</span>":"")+"</a>";
+}).join("");
+
+/* ---------- 搜索 / 新增 ---------- */
+$("#globalSearch").addEventListener("input",e=>{ state.search=e.target.value; render(); });
+$("#addBtn").addEventListener("click",()=>{
+  if(state.view==="dashboard") return;
+  if(state.view==="crm"){ toast("CRM 客户由「客户开发」模块背调后转入"); return; }
+  openForm(VIEWKEY[state.view],null);
+});
+
+/* ============================================================
+   业务动作（详情页面上的 AI / 流转按钮）
+   ============================================================ */
+document.addEventListener("click",e=>{
+  const t=e.target;
+
+  /* 看板统计卡 / 今日待办跳转 */
+  const nv=t.closest("[data-nav]");
+  if(nv){ go(nv.dataset.nav); return; }
+
+  const cid=$("#modal")&&$("#modal").dataset.cid;   // 当前详情所属 Company ID
+  const act=t.closest("[data-act]");
+  if(act && ["aiResearch","genEmail","toCRM","goCRM","genEmailCRM","logAct","newTask",
+             "adoptAdvice","genFollow","replyYes","doneNext","addContact",
+             "markHandled"].includes(act.dataset.act)){
+    handleAct(act.dataset.act,act.dataset.id||cid);
+    return;
+  }
+  const ec=t.closest("[data-editcontact]");
+  if(ec){ FORMCOLL="contact"; FORMID=ec.dataset.editcontact;
+    FORM=rd("contact",[]).find(c=>c.id===FORMID)||{id:FORMID}; buildForm(); return; }
+  const dc=t.closest("[data-delcontact]");
+  if(dc){ const id=dc.dataset.delcontact;
+    wr("contact", rd("contact",[]).filter(c=>c.id!==id));
+    toast("联系人已删除"); closeModal(); openDetail("lead",cid); render(); return; }
+});
+
+function handleAct(act){
+  const M=$("#modal")||{dataset:{}};
+  const cid=M.dataset.cid||"", eid=M.dataset.eid||"";
+  const isColl=M.dataset.ecoll||"";
+  /* 各动作真正需要的 ID：业务流转用 Company ID，任务操作用 Task ID，主推用 Product ID */
+  const id=(act==="genFollow"||act==="replyYes"||act==="doneNext"||act==="adoptAdvice")?eid:cid;
+  switch(act){
+    /* --- 客户开发 --- */
+    case "aiResearch":{
+      aiResearch(id);
+      const c=getCompany(id); if(c) openDetail("lead",id);
+      render(); return;
+    }
+    case "genEmail": openEmailModal(id); return;
+    case "genEmailCRM": openEmailModal(id); return;
+    case "goCRM": openCRM(id); return;
+    case "addContact":{
+      FORMCOLL="contact"; FORMID=null;
+      FORM={id:uid(),companyId:id,isDecisionMaker:"是",source:"官网"};
+      buildForm();
+      AFTER=()=>{ openDetail("lead",id); };
+      return;
+    }
+    case "toCRM":{
+      const c=getCompany(id); if(!c) return;
+      if(getCRM(id)){ toast("该客户已在 CRM 中"); openCRM(id); return; }
+      const ct=primaryContact(id);
+      const arr=rd("crm",[]);
+      arr.push({companyId:id,name:c.name,country:c.country,website:c.website,
+        grade:c.grade||"B",owner:"Linda",contactName:ct?ct.name:"",contactTitle:ct?ct.title:"",
+        email:ct?ct.email:"",linkedin:ct?ct.linkedin:"",matchedProducts:c.recProductIds||[],
+        requirement:c.mayBuy||"",stage:"待开发",lastContactDate:today(),nextFollowDate:"",
+        lastCommunication:"",replySummary:"",quoteStatus:"未报价",sampleStatus:"未寄样",
+        expectedAmount:"",actualAmount:"",researcher:"Linda",lastEditor:"Linda",ts:Date.now()});
+      wr("crm",arr);
+      addAct(id,"进入 CRM",c.name+" 完成背调并进入 CRM","等级 "+(c.grade||"—")+" · 推荐产品："+recNames(c));
+      closeModal(); toast("已转入 CRM"); openDetail("crm",id); render(); return;
+    }
+    /* --- CRM --- */
+    case "logAct": logActModal(id); return;
+    case "newTask": createTask(id); return;
+    /* --- 主推产品 --- */
+    case "adoptAdvice":{
+      const arr=rd("featured",[]); const f=arr.find(x=>x.productId===id); if(!f) return;
+      const adv=aiFeaturedAdvice(f);
+      f.isFeatured=(adv.score>=7)?"是":"否";
+      wr("featured",arr); toast("已按 AI 建议更新：是否主推 = "+f.isFeatured);
+      openDetail("featured",id); render(); return;
+    }
+    /* --- 跟进任务 --- */
+    case "genFollow":{
+      const arr=rd("task",[]); const t=arr.find(x=>x.taskId===id); if(!t) return;
+      const g=genFollowContent(t);
+      t.aiSuggestion=g.suggestion; t.aiContent=g.body;
+      wr("task",arr); toast("AI 已生成跟进内容");
+      openDetail("task",id); render(); return;
+    }
+    case "replyYes":{
+      const arr=rd("task",[]); const t=arr.find(x=>x.taskId===id); if(!t) return;
+      t.replied="是"; t.status="已完成";
+      wr("task",arr);
+      addAct(t.companyId,"客户回复",(t.companyName||t.companyId)+" 已回复",
+        "客户已回复，自动跟进已停止，转入 Linda 人工处理队列");
+      const ms=rd("crm",[]); const mi=ms.findIndex(m=>m.companyId===t.companyId);
+      if(mi>=0 && ["待开发","首次联系"].includes(ms[mi].stage)){ ms[mi].stage="已回复"; wr("crm",ms); }
+      closeModal(); toast("已停止自动跟进，转入人工处理");
+      render(); go("crm"); return;
+    }
+    case "doneNext":{
+      const arr=rd("task",[]); const i=arr.findIndex(x=>x.taskId===id); if(i<0) return;
+      const t=arr[i];
+      t.status="已完成";
+      if(t.replied==="是"){
+        wr("task",arr);
+        addAct(t.companyId,"客户回复",(t.companyName||t.companyId)+" 已回复","已停止自动跟进，转 Linda 处理");
+        closeModal(); toast("已完成，因客户已回复停止自动跟进"); render(); return;
+      }
+      const gap=nextGap(t.grade);
+      const nt={...t};
+      nt.taskId=genId("T","task","taskId",4);
+      nt.followCount=(+t.followCount||0)+1;
+      nt.status="待处理";
+      nt.lastContactDate=today();
+      nt.lastContactContent=(t.aiContent||t.goal||"").slice(0,300);
+      nt.nextDate=addDays(gap);
+      const g=genFollowContent(nt);
+      nt.aiSuggestion=g.suggestion; nt.aiContent=g.body;
+      nt.ts=Date.now();
+      arr[i]=t; arr.push(nt); wr("task",arr);
+      addAct(t.companyId,"跟进任务","第 "+nt.followCount+" 次跟进已生成","下次跟进："+nt.nextDate+" · "+nt.method);
+      closeModal(); toast("已完成，下一次跟进已生成："+nt.nextDate);
+      openDetail("task",nt.taskId); render(); return;
+    }
+    case "markHandled":{
+      const arr=rd("act",[]); const a=arr.find(x=>x.id===id); if(!a) return;
+      a.handled=true; wr("act",arr); toast("已标记处理完毕"); render(); return;
+    }
+  }
+}
+
+/* ---------- 记录一次沟通 ---------- */
+function logActModal(companyId){
+  openModal(
+    '<div class="modal-head"><div><h3>记录一次沟通</h3><div class="sub">内容会写入客户时间线并更新最近联系日期</div></div>'+
+      '<span class="x" data-act="close">×</span></div>'+
+    '<div class="modal-body"><div class="grid2">'+
+      '<div class="field"><label>日期</label><input id="acDate" type="date" value="'+today()+'"></div>'+
+      '<div class="field"><label>类型</label><select id="acType"><option>邮件往来</option><option>客户回复</option>'+
+        '<option>电话沟通</option><option>报价</option><option>样品</option><option>谈判</option><option>订单</option></select></div>'+
+      '<div class="field full"><label>标题</label><input id="acTitle" placeholder="如：发送铰链规格书与报价"></div>'+
+      '<div class="field full"><label>沟通内容</label><textarea id="acBody" rows="5"></textarea></div>'+
+    "</div></div>"+
+    '<div class="modal-foot"><button class="btn btn-ghost" data-act="close">取消</button>'+
+    '<button class="btn btn-primary" id="acSave">保存到时间线</button></div>', "");
+  $("#acSave").onclick=()=>{
+    const at=$("#acDate").value||today(), type=$("#acType").value, ti=$("#acTitle").value, bd=$("#acBody").value;
+    if(!ti&&!bd){ toast("请填写标题或内容"); return; }
+    addAct(companyId,type,ti||type,bd);
+    const ms=rd("crm",[]); const i=ms.findIndex(m=>m.companyId===companyId);
+    if(i>=0){
+      ms[i].lastContactDate=at;
+      ms[i].lastCommunication=[ti,bd].filter(Boolean).join("：");
+      if(type==="客户回复"){ ms[i].replySummary=ms[i].replySummary||bd; }
+      wr("crm",ms);
+    }
+    closeModal(); toast("已记录到客户时间线"); openDetail("crm",companyId); render();
+  };
+}
+
+/* ---------- 建立跟进任务 ---------- */
+function createTask(companyId){
+  const c=getCompany(companyId), m=getCRM(companyId), ct=primaryContact(companyId);
+  const arr=rd("task",[]);
+  const t={taskId:genId("T","task","taskId",4),companyId,companyName:c?c.name:"",
+    contactName:ct?ct.name:"",grade:(m?m.grade:(c?c.grade:""))||"B",stage:(m?m.stage:"")||"待开发",
+    lastContactDate:(m?m.lastContactDate:"")||today(),lastContactContent:(m?m.lastCommunication:"")||"",
+    replied:"否",followCount:1,nextDate:addDays(3),method:"Email",goal:"",
+    aiSuggestion:"",aiContent:"",status:"待处理",ts:Date.now()};
+  if(m){
+    const ms=rd("crm",[]); const mi=ms.findIndex(x=>x.companyId===companyId);
+    if(mi>=0){ ms[mi].nextFollowDate=t.nextDate; wr("crm",ms); }
+  }
+  const g=genFollowContent(t); t.aiSuggestion=g.suggestion; t.aiContent=g.body;
+  arr.push(t); wr("task",arr);
+  addAct(companyId,"跟进任务","建立跟进任务 "+t.taskId,"下次跟进："+t.nextDate+" · "+t.method);
+  closeModal(); toast("跟进任务已生成"); openDetail("task",t.taskId); render();
+}
+
+/* ============================================================
+   导入 / 导出（全 10 张表）
+   ============================================================ */
+function exportData(){
+  const d={_export:"TBD Hardware B2B AI Customer Development System",_at:new Date().toISOString()};
+  COLS.forEach(c=>{ d[c]=rd(c,c==="settings"?{}:[]); });
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="TBD_B2B_备份_"+today()+".json"; a.click();
+  toast("全部数据已导出");
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=e=>{ try{
+    const d=JSON.parse(e.target.result);
+    if(!d||!d.factory||!d.product) throw 0;
+    if(!confirm("导入将覆盖当前全部业务数据（工厂 / 产品 / 主推 / 知识库 / 客户 / CRM / 任务 / 时间线），确定继续？")) return;
+    COLS.forEach(c=>{ if(d[c]!==undefined) localStorage.setItem(KEY[c],JSON.stringify(d[c])); });
+    toast("导入成功，正在同步云端"); pushSnapshot(); go("dashboard");
+  }catch(err){ toast("文件格式不正确"); } };
+  r.readAsText(file);
+}
+
+/* ============================================================
+   首次数据 / 旧版迁移
+   ============================================================ */
 function seedIfEmpty(){
-  if(localStorage.getItem(LS_F)===null){
-    saveFactories([
+  if(localStorage.getItem(KEY.factory)===null){
+    wr("factory",[
       {supplierId:"S001",name:"宁波恒力五金制造厂",contact:"张伟",phone:"13805748888",
        category:"铰链 / 滑轨 / 合页",products:"重型铰链、阻尼滑轨、柜门合页、不锈钢配件",
        advantage:"20年五金生产经验，交期稳定，支持小批量定制打样",market:"北美 / 欧洲 / 东南亚",
-       cooperation:"高",support:"完整",lastContact:"2026-09-15"},
+       cooperation:"A",support:"完整",lastContact:"2026-09-15"},
       {supplierId:"S002",name:"东莞精密压铸有限公司",contact:"李娜",phone:"0769-88990012",
        category:"铝合金 / 锌合金压铸件",products:"铝合金压铸件、散热器外壳、结构件",
        advantage:"CNC+压铸一体，公差控制±0.02mm，有自有模具车间",market:"北美 / 日本",
-       cooperation:"中",support:"部分",lastContact:"2026-09-10"},
+       cooperation:"B",support:"部分",lastContact:"2026-09-10"},
       {supplierId:"S003",name:"佛山顺德钣金加工厂",contact:"陈强",phone:"18902887766",
        category:"钣金 / 机箱机柜",products:"控制箱、机柜、钣金外壳、激光切割件",
        advantage:"激光切割+折弯柔性产线，48小时出样",market:"中东 / 欧洲",
-       cooperation:"高",support:"完整",lastContact:"2026-09-18"}
+       cooperation:"A",support:"完整",lastContact:"2026-09-18"}
     ]);
-    saveProducts([
+  }
+  if(localStorage.getItem(KEY.product)===null){
+    wr("product",[
       {productId:"P0001",supplierId:"S001",image:null,name:"重型柜门铰链",model:"HL-200",
        size:"200×50×3mm",material:"304不锈钢",surface:"镀锌",market:"北美",moq:"500",priceRange:"$1.2-1.8/只",drawing:null},
       {productId:"P0002",supplierId:"S001",image:null,name:"三节阻尼滑轨",model:"SL-300",
@@ -247,499 +1887,30 @@ function seedIfEmpty(){
        size:"400×300×200mm",material:"SPCC",surface:"粉末喷涂",market:"欧洲",moq:"200",priceRange:"$8-12/件",drawing:null}
     ]);
   }
-}
-seedIfEmpty(); // 本地首次进入种入示例（已在底部启动时统一调用）
-
-/* ============================================================
-   云端同步层（服务器为唯一真相源，支持跨设备）
-   —— 浏览器本地 localStorage 仍作为缓存，保证离线可用；
-      每次改动推送到服务器，任何设备打开都先从服务器拉回最新数据。
-   ============================================================ */
-async function pushSnapshot(){
-  try{
-    const body={factories:loadFactories(),products:loadProducts()};
-    const r=await fetch("/api/snapshot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-    if(r.ok) setSync("cloud"); else setSync("error");
-  }catch(e){ setSync("offline"); }
-}
-async function pullSnapshot(){
-  try{
-    const r=await fetch("/api/snapshot"); const d=await r.json();
-    if(d && Array.isArray(d.factories) && (d.factories.length||d.products.length)){
-      saveFactories(d.factories); saveProducts(d.products); setSync("cloud");
-    }else{
-      await pushSnapshot(); // 服务器为空，用本地数据种入
-    }
-  }catch(e){ setSync("offline"); }
-}
-function setSync(mode){
-  const f=$("#syncFoot"); if(!f) return;
-  if(mode==="cloud")   f.innerHTML="☁ 云端已同步<br>Phase 1 · 工厂 & 产品池";
-  else if(mode==="offline") f.innerHTML="⚠ 离线（本地已存）<br>Phase 1 · 工厂 & 产品池";
-  else f.innerHTML="⚠ 同步异常<br>Phase 1 · 工厂 & 产品池";
+  COLS.forEach(c=>{ if(localStorage.getItem(KEY[c])===null) localStorage.setItem(KEY[c],c==="settings"?"{}":"[]"); });
+  if(!rd("settings",{}).sendMode){ const s=rd("settings",{}); s.sendMode="人工确认"; wr("settings",s); }
+  /* 旧版本配合度迁移：高→A / 中→B / 低→C */
+  const fs=rd("factory",[]); let ch=false;
+  fs.forEach(f=>{ if(f.cooperation==="高"){f.cooperation="A";ch=true;}
+                  if(f.cooperation==="中"){f.cooperation="B";ch=true;}
+                  if(f.cooperation==="低"){f.cooperation="C";ch=true;} });
+  if(ch) wr("factory",fs);
 }
 
 /* ============================================================
-   全局状态
+   启动：先用本地缓存立刻渲染（不等网络），再后台与云端同步
    ============================================================ */
-let state = { view:"factory", search:"", supplierFilter:null, factoryFocus:null };
-let form = {};   // 新增/编辑时的临时表单数据
-
-/* ============================================================
-   工具函数
-   ============================================================ */
-function $(s,r=document){return r.querySelector(s);}
-function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
-function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
-function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1800);}
-
-/* 图片压缩：绘制到 canvas 后导出，控制体积 */
-function compressFile(file, maxDim, cb){
-  if(!file) return cb(null);
-  if(file.type==="application/pdf"){
-    const r=new FileReader(); r.onload=e=>cb({kind:"pdf",data:e.target.result,name:file.name}); r.readAsDataURL(file); return;
-  }
-  const r=new FileReader();
-  r.onload=e=>{
-    const img=new Image();
-    img.onload=()=>{
-      let w=img.width,h=img.height;
-      if(w>h && w>maxDim){h=Math.round(h*maxDim/w);w=maxDim;}
-      else if(h>maxDim){w=Math.round(w*maxDim/h);h=maxDim;}
-      const c=document.createElement("canvas");c.width=w;c.height=h;
-      c.getContext("2d").drawImage(img,0,0,w,h);
-      cb({kind:"img",data:c.toDataURL("image/jpeg",0.7),name:file.name});
-    };
-    img.onerror=()=>cb(null);
-    img.src=e.target.result;
-  };
-  r.readAsDataURL(file);
-}
-function badgeCoop(v){const m={"高":["b-high","高"],"中":["b-mid","中"],"低":["b-low","低"]};const x=m[v]||["b-none",v||"—"];return `<span class="badge ${x[0]}">${esc(x[1])}</span>`;}
-function badgeSupport(v){const m={"完整":["b-full","完整"],"部分":["b-part","部分"],"无":["b-none","无"]};const x=m[v]||["b-none",v||"—"];return `<span class="badge ${x[0]}">${esc(x[1])}</span>`;}
-
-/* ============================================================
-   导航 / 渲染入口
-   ============================================================ */
-const TITLES={
-  dashboard:["数据看板","全局统计与业务流概览"],
-  factory:["工厂管理","管理供应商工厂资源（11 字段）"],
-  product:["产品池","管理全部产品与图纸（12 字段）"],
-  featured:["主推产品","第二阶段建设中"],
-  kb:["产品知识库","第二阶段建设中"],
-  dev:["客户开发","第二阶段建设中"],
-  crm:["客户CRM","第二阶段建设中"],
-  task:["跟进任务","第二阶段建设中"]
-};
-function go(view,opts={}){
-  state.view=view;
-  state.supplierFilter = opts.supplierFilter ?? null;
-  state.factoryFocus   = opts.factoryFocus ?? null;
-  if(opts.search!==undefined) state.search=opts.search;
-  document.querySelectorAll("#nav a").forEach(a=>a.classList.toggle("active",a.dataset.view===view));
-  $("#pageTitle").textContent=TITLES[view][0];
-  $("#pageCrumb").textContent=TITLES[view][1];
-  $("#addBtn").style.display = (view==="factory"||view==="product")?"inline-flex":"none";
-  render();
-}
-document.querySelectorAll("#nav a").forEach(a=>a.addEventListener("click",()=>go(a.dataset.view)));
-
-document.getElementById("globalSearch").addEventListener("input",e=>{
-  state.search=e.target.value;
-  if(state.view!=="factory"&&state.view!=="product") go(state.view==="dashboard"?"factory":"product");
-  render();
-});
-$("#addBtn").addEventListener("click",()=>{
-  if(state.view==="factory") openFactoryModal(null);
-  if(state.view==="product") openProductModal(null);
-});
-
-/* ============================================================
-   渲染：各视图
-   ============================================================ */
-function render(){
-  const c=$("#content");
-  if(state.view==="dashboard") return renderDashboard(c);
-  if(state.view==="factory")   return renderFactory(c);
-  if(state.view==="product")   return renderProduct(c);
-  return renderPlaceholder(c,state.view);
-}
-
-/* ---------- 数据看板 ---------- */
-function renderDashboard(c){
-  const F=loadFactories(), P=loadProducts();
-  const avg = F.length? (P.length/F.length).toFixed(1):"0";
-  const highCoop = F.filter(f=>f.cooperation==="高").length;
-  const recent = [...F].sort((a,b)=>(b.lastContact||"").localeCompare(a.lastContact||"")).slice(0,1)[0];
-  c.innerHTML="";
-  const stats=el("div","stats");
-  stats.innerHTML=`
-    <div class="stat"><div class="k">工厂总数</div><div class="v">${F.length}<small> 家</small></div></div>
-    <div class="stat"><div class="k">产品总数</div><div class="v">${P.length}<small> 个</small></div></div>
-    <div class="stat"><div class="k">厂均产品数</div><div class="v">${avg}<small> 个/厂</small></div></div>
-    <div class="stat"><div class="k">高配合度工厂</div><div class="v">${highCoop}<small> 家</small></div></div>
-    <div class="stat"><div class="k">最近沟通</div><div class="v" style="font-size:16px;line-height:1.4;margin-top:10px">${recent?esc(recent.name):"—"}<br><small>${recent?esc(recent.lastContact):""}</small></div></div>`;
-  c.appendChild(stats);
-
-  // 产品分布（按工厂）
-  const panel1=el("div","panel");
-  panel1.innerHTML=`<h3><span class="dot"></span>各工厂产品分布</h3>`;
-  const rows=el("div");
-  const maxc=Math.max(1,...F.map(f=>productsOf(f.supplierId).length));
-  F.forEach(f=>{
-    const n=productsOf(f.supplierId).length;
-    const r=el("div","bar-row");
-    r.innerHTML=`<div class="name" title="${esc(f.name)}">${esc(f.supplierId)} · ${esc(f.name)}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,n/maxc*100)}%"></div></div>
-      <div class="num">${n}</div>`;
-    rows.appendChild(r);
-  });
-  if(!F.length) rows.innerHTML=`<div class="muted">暂无工厂数据，请先到「工厂管理」添加。</div>`;
-  panel1.appendChild(rows);
-  c.appendChild(panel1);
-
-  // 业务逻辑流
-  const panel2=el("div","panel");
-  panel2.innerHTML=`<h3><span class="dot"></span>业务逻辑流（全局路线图）</h3>`;
-  const flow=el("div","flow");
-  const steps=[
-    ["工厂管理",1],["产品池",1],["主推产品",0],["产品知识库",0],["找目标客户",0],
-    ["AI背调",0],["AI匹配产品",0],["找决策人",0],["CRM",0],["个性化开发",0],
-    ["跟进",0],["客户回复",0],["Linda处理",0]
-  ];
-  steps.forEach((s,i)=>{
-    const d=el("div","step"+(s[1]?" on":""),esc(s[0]));
-    flow.appendChild(d);
-    if(i<steps.length-1) flow.appendChild(el("span","arr","→"));
-  });
-  panel2.appendChild(flow);
-  const note=el("p","muted");
-  note.style.marginTop="14px";note.style.fontSize="12.5px";
-  note.innerHTML=`当前 <b style="color:var(--ink)">Phase 1</b> 已打通「工厂管理」「产品池」两个核心数据库，并实现工厂↔产品的双向联动。后续业务流将在第二阶段依次开启。`;
-  panel2.appendChild(note);
-  c.appendChild(panel2);
-
-  // 数据备份
-  const panel3=el("div","panel");
-  panel3.innerHTML=`<h3><span class="dot"></span>数据备份 / 恢复</h3>`;
-  const bar=el("div"); bar.style.display="flex";bar.style.gap="10px";bar.style.flexWrap="wrap";
-  const exp=el("button","btn btn-ghost","⬇ 导出全部数据 (JSON)");
-  exp.onclick=exportData;
-  const imp=el("button","btn btn-ghost","⬆ 导入数据 (JSON)");
-  imp.onclick=()=>{const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);};i.click();};
-  bar.appendChild(exp);bar.appendChild(imp);
-  panel3.appendChild(bar);
-  const hint=el("p","muted");hint.style.marginTop="10px";hint.style.fontSize="12px";
-  hint.textContent="数据已自动同步至服务器，可在任意设备打开网页访问。导出 JSON 作为额外离线备份，建议定期保存一份。";
-  panel3.appendChild(hint);
-  c.appendChild(panel3);
-}
-
-/* ---------- 工厂管理 ---------- */
-function renderFactory(c){
-  let list=loadFactories();
-  if(state.factoryFocus){ // 来自产品点击 Supplier ID 的聚焦
-    list=list.filter(f=>f.supplierId===state.factoryFocus);
-  }
-  const q=state.search.trim().toLowerCase();
-  if(q) list=list.filter(f=>[f.supplierId,f.name,f.contact,f.phone,f.category,f.market,f.products].join(" ").toLowerCase().includes(q));
-
-  c.innerHTML="";
-  // 筛选条
-  const fb=el("div","filterbar");
-  if(state.factoryFocus){
-    const f=getFactory(state.factoryFocus);
-    fb.innerHTML=`<span class="chip">已定位工厂：${esc(state.factoryFocus)} ${esc(f?f.name:"")} <button onclick="clearFactoryFocus()">✕</button></span>`;
-  }
-  fb.innerHTML+=`<span class="muted" style="margin-left:auto">共 ${list.length} 家工厂</span>`;
-  c.appendChild(fb);
-
-  if(!list.length){
-    c.appendChild(emptyState("🏭","暂无工厂","点击右上角「＋ 新增」添加第一家工厂，或从产品池点击 Supplier ID 定位。"));
-    return;
-  }
-  const tbl=el("table");
-  tbl.innerHTML=`<thead><tr>
-    <th>Supplier ID</th><th>工厂名称</th><th>联系人</th><th>联系方式</th><th>产品大类</th>
-    <th>核心优势</th><th>主要市场</th><th>配合度</th><th>资料支持</th><th>最近沟通</th>
-    <th>关联产品</th><th>操作</th></tr></thead>`;
-  const tb=el("tbody");
-  list.forEach(f=>{
-    const n=productsOf(f.supplierId).length;
-    const tr=el("tr");
-    tr.innerHTML=`
-      <td><b>${esc(f.supplierId)}</b></td>
-      <td>${esc(f.name)}</td>
-      <td>${esc(f.contact||"—")}</td>
-      <td>${esc(f.phone||"—")}</td>
-      <td>${esc(f.category||"—")}</td>
-      <td style="max-width:200px;color:var(--muted)">${esc(f.advantage||"—")}</td>
-      <td>${esc(f.market||"—")}</td>
-      <td>${badgeCoop(f.cooperation)}</td>
-      <td>${badgeSupport(f.support)}</td>
-      <td>${esc(f.lastContact||"—")}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="viewProducts('${f.supplierId}')">查看产品 (${n})</button></td>
-      <td><div class="row-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openFactoryModal('${f.supplierId}')">编辑</button>
-        <button class="btn btn-danger btn-sm" onclick="delFactory('${f.supplierId}')">删除</button>
-      </div></td>`;
-    tb.appendChild(tr);
-  });
-  tbl.appendChild(tb);
-  c.appendChild(tbl);
-}
-function clearFactoryFocus(){ state.factoryFocus=null; render(); }
-
-function viewProducts(sid){
-  go("product",{supplierFilter:sid});
-}
-
-/* ---------- 产品池 ---------- */
-function renderProduct(c){
-  let list=loadProducts();
-  if(state.supplierFilter) list=list.filter(p=>p.supplierId===state.supplierFilter);
-  const q=state.search.trim().toLowerCase();
-  if(q) list=list.filter(p=>[p.productId,p.supplierId,p.name,p.model,p.material,p.market,p.size].join(" ").toLowerCase().includes(q));
-
-  c.innerHTML="";
-  const fb=el("div","filterbar");
-  const optHtml=`<option value="">全部供应商</option>`+loadFactories().map(f=>`<option value="${esc(f.supplierId)}" ${state.supplierFilter===f.supplierId?"selected":""}>${esc(f.supplierId)} · ${esc(f.name)}</option>`).join("");
-  let chipHtml="";
-  if(state.supplierFilter){
-    const f=getFactory(state.supplierFilter);
-    chipHtml=`<span class="chip">来自工厂：${esc(state.supplierFilter)} ${esc(f?f.name:"")} <button onclick="clearSupplierFilter()">✕</button></span>`;
-  }
-  fb.innerHTML=`<select id="supFilter">${optHtml}</select>${chipHtml}<span class="muted" style="margin-left:auto">共 ${list.length} 个产品</span>`;
-  fb.querySelector("#supFilter").onchange=e=>{state.supplierFilter=e.target.value||null;render();};
-  c.appendChild(fb);
-
-  if(!list.length){
-    c.appendChild(emptyState("📦","暂无产品","点击右上角「＋ 新增」添加产品，并关联已有工厂 Supplier ID。"));
-    return;
-  }
-  const tbl=el("table");
-  tbl.innerHTML=`<thead><tr>
-    <th>产品图片</th><th>Product ID</th><th>Supplier ID</th><th>产品名</th><th>型号</th>
-    <th>尺寸</th><th>材质</th><th>表面处理</th><th>主要市场</th><th>MOQ</th><th>价格范围</th><th>图纸</th>
-    <th>操作</th></tr></thead>`;
-  const tb=el("tbody");
-  list.forEach(p=>{
-    const tr=el("tr");
-    const imgCell = p.image ? `<img class="thumb" src="${p.image.data}" alt="">` : `<div class="thumb" style="display:flex;align-items:center;justify-content:center;color:#c5cdd9">无图</div>`;
-    const drawCell = p.drawing ? (p.drawing.kind==="pdf"
-        ? `<a class="id-link" href="${p.drawing.data}" target="_blank">📄 查看</a>`
-        : `<a class="id-link" href="${p.drawing.data}" target="_blank">🖼 查看</a>`) : `<span class="muted">—</span>`;
-    tr.innerHTML=`
-      <td>${imgCell}</td>
-      <td><b>${esc(p.productId)}</b></td>
-      <td><a class="id-link" onclick="focusFactory('${p.supplierId}')">${esc(p.supplierId)}</a></td>
-      <td>${esc(p.name)}</td>
-      <td>${esc(p.model||"—")}</td>
-      <td>${esc(p.size||"—")}</td>
-      <td>${esc(p.material||"—")}</td>
-      <td>${esc(p.surface||"—")}</td>
-      <td>${esc(p.market||"—")}</td>
-      <td>${esc(p.moq||"—")}</td>
-      <td>${esc(p.priceRange||"—")}</td>
-      <td>${drawCell}</td>
-      <td><div class="row-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openProductModal('${p.productId}')">编辑</button>
-        <button class="btn btn-danger btn-sm" onclick="delProduct('${p.productId}')">删除</button>
-      </div></td>`;
-    tb.appendChild(tr);
-  });
-  tbl.appendChild(tb);
-  c.appendChild(tbl);
-}
-function clearSupplierFilter(){ state.supplierFilter=null; render(); }
-function focusFactory(sid){ go("factory",{factoryFocus:sid}); }
-
-/* ---------- 占位 ---------- */
-function renderPlaceholder(c,view){
-  const map={
-    featured:["⭐","主推产品","从产品池中挑出主推款，配置主推理由与卖点话术。第二阶段开启。"],
-    kb:["📚","产品知识库","沉淀每个产品的技术参数、FAQ、竞品对比，供 AI 调用。第二阶段开启。"],
-    dev:["🎯","客户开发","基于产品匹配目标客户画像，进入「找目标客户 → AI背调 → AI匹配产品 → 找决策人」。第二阶段开启。"],
-    crm:["👥","客户CRM","管理客户全生命周期：个性化开发 → 跟进 → 客户回复 → Linda处理。第二阶段开启。"],
-    task:["✓","跟进任务","把跟进动作拆解成待办，按客户阶段与优先级排程。第二阶段开启。"]
-  };
-  const m=map[view];
-  c.innerHTML="";
-  const p=el("div","ph");
-  p.innerHTML=`<div class="ic">${m[0]}</div><h3>${m[1]}</h3><p>${m[2]}</p>`;
-  c.appendChild(p);
-}
-function emptyState(ic,t,sub){
-  const d=el("div","empty");d.innerHTML=`<div class="big">${ic}</div><div style="font-size:15px;color:var(--ink);font-weight:600">${t}</div><div style="margin-top:6px">${sub}</div>`;return d;
-}
-
-/* ============================================================
-   工厂 新增/编辑 模态
-   ============================================================ */
-function openFactoryModal(id){
-  const editing = id? getFactory(id):null;
-  form = editing? {...editing} : {supplierId:nextSupplierId()};
-  const m=$("#modal"); m.className="modal";
-  m.innerHTML=`
-    <div class="modal-head"><h3>${editing?"编辑工厂":"新增工厂"}</h3><span class="x" onclick="closeModal()">×</span></div>
-    <div class="modal-body">
-      <div class="grid2">
-        <div class="field"><label>Supplier ID（系统编号）</label><input id="f_sid" value="${esc(form.supplierId)}" ${editing?"readonly":""}></div>
-        <div class="field"><label>工厂名称 <span class="req">*</span></label><input id="f_name" value="${esc(form.name||"")}" placeholder="如：宁波恒力五金制造厂"></div>
-        <div class="field"><label>联系人</label><input id="f_contact" value="${esc(form.contact||"")}"></div>
-        <div class="field"><label>联系方式</label><input id="f_phone" value="${esc(form.phone||"")}" placeholder="手机 / 电话"></div>
-        <div class="field"><label>产品大类</label><input id="f_cat" value="${esc(form.category||"")}" placeholder="如：铰链 / 滑轨"></div>
-        <div class="field"><label>主要市场</label><input id="f_market" value="${esc(form.market||"")}" placeholder="如：北美 / 欧洲"></div>
-        <div class="field"><label>配合度</label><select id="f_coop">
-          ${["高","中","低"].map(v=>`<option ${form.cooperation===v?"selected":""}>${v}</option>`).join("")}</select></div>
-        <div class="field"><label>资料支持</label><select id="f_sup">
-          ${["完整","部分","无"].map(v=>`<option ${form.support===v?"selected":""}>${v}</option>`).join("")}</select></div>
-        <div class="field"><label>最近沟通日期</label><input id="f_date" type="date" value="${esc(form.lastContact||"")}"></div>
-        <div class="field full"><label>可生产产品</label><textarea id="f_prod" placeholder="该工厂能做的产品清单">${esc(form.products||"")}</textarea></div>
-        <div class="field full"><label>核心优势</label><textarea id="f_adv" placeholder="交期、质量、定制能力、认证等">${esc(form.advantage||"")}</textarea></div>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
-      <button class="btn btn-primary" onclick="saveFactory()">${editing?"保存修改":"创建工厂"}</button>
-    </div>`;
-  showModal();
-}
-function saveFactory(){
-  const name=$("#f_name").value.trim();
-  if(!name){ toast("请填写工厂名称"); return; }
-  const data={
-    supplierId:$("#f_sid").value.trim(),
-    name, contact:$("#f_contact").value.trim(), phone:$("#f_phone").value.trim(),
-    category:$("#f_cat").value.trim(), market:$("#f_market").value.trim(),
-    cooperation:$("#f_coop").value, support:$("#f_sup").value,
-    lastContact:$("#f_date").value, products:$("#f_prod").value.trim(), advantage:$("#f_adv").value.trim()
-  };
-  let arr=loadFactories();
-  const i=arr.findIndex(f=>f.supplierId===data.supplierId);
-  if(i>=0) arr[i]=data; else arr.push(data);
-  saveFactories(arr);
-  closeModal(); toast(i>=0?"工厂已更新":"工厂已创建："+data.supplierId); pushSnapshot(); render();
-}
-function delFactory(id){
-  const n=productsOf(id).length;
-  confirmBox(`确定删除工厂 <b>${id}</b> 吗？${n?`<br><span style="color:var(--bad)">该工厂下还有 ${n} 个产品，删除工厂不会自动删除产品（其 Supplier ID 将变成失效关联）。</span>`:""}`,()=>{
-    saveFactories(loadFactories().filter(f=>f.supplierId!==id));
-    closeModal(); toast("工厂已删除"); pushSnapshot(); render();
-  });
-}
-
-/* ============================================================
-   产品 新增/编辑 模态
-   ============================================================ */
-function openProductModal(id){
-  const editing = id? loadProducts().find(p=>p.productId===id):null;
-  form = editing? {...editing} : {productId:nextProductId(), image:null, drawing:null};
-  const factories=loadFactories();
-  if(!factories.length){ toast("请先到「工厂管理」添加至少一家工厂"); return; }
-  const m=$("#modal"); m.className="modal wide";
-  const imgPrev = form.image ? `<img src="${form.image.data}">` : `<span class="muted">未上传</span>`;
-  const drawPrev = form.drawing ? (form.drawing.kind==="pdf"?`<span class="lnk">📄 ${esc(form.drawing.name)}</span>`:`<img src="${form.drawing.data}">`) : `<span class="muted">未上传</span>`;
-  m.innerHTML=`
-    <div class="modal-head"><h3>${editing?"编辑产品":"新增产品"}</h3><span class="x" onclick="closeModal()">×</span></div>
-    <div class="modal-body">
-      <div class="grid2">
-        <div class="field"><label>Product ID（系统编号）</label><input id="p_pid" value="${esc(form.productId)}" ${editing?"readonly":""}></div>
-        <div class="field"><label>Supplier ID（关联工厂）<span class="req">*</span></label><select id="p_sid">
-          ${factories.map(f=>`<option value="${esc(f.supplierId)}" ${(form.supplierId||factories[0].supplierId)===f.supplierId?"selected":""}>${esc(f.supplierId)} · ${esc(f.name)}</option>`).join("")}</select></div>
-        <div class="field"><label>产品名 <span class="req">*</span></label><input id="p_name" value="${esc(form.name||"")}" placeholder="如：重型柜门铰链"></div>
-        <div class="field"><label>型号</label><input id="p_model" value="${esc(form.model||"")}" placeholder="如：HL-200"></div>
-        <div class="field"><label>尺寸</label><input id="p_size" value="${esc(form.size||"")}" placeholder="如：200×50×3mm"></div>
-        <div class="field"><label>材质</label><input id="p_material" value="${esc(form.material||"")}" placeholder="如：304不锈钢"></div>
-        <div class="field"><label>表面处理</label><input id="p_surface" value="${esc(form.surface||"")}" placeholder="如：镀锌"></div>
-        <div class="field"><label>主要市场</label><input id="p_market" value="${esc(form.market||"")}" placeholder="如：北美"></div>
-        <div class="field"><label>MOQ</label><input id="p_moq" value="${esc(form.moq||"")}" placeholder="如：500"></div>
-        <div class="field"><label>价格范围</label><input id="p_price" value="${esc(form.priceRange||"")}" placeholder="如：$1.2-1.8/只"></div>
-        <div class="field full"><label>产品图片（自动压缩）</label>
-          <div class="filebox" onclick="pickImg()">点击上传图片<div class="pv" id="imgPrev">${imgPrev}</div></div>
-          <input type="file" id="p_img" accept="image/*" style="display:none"></div>
-        <div class="field full"><label>图纸（图片 / PDF）</label>
-          <div class="filebox" onclick="pickDraw()">点击上传图纸<div class="pv" id="drawPrev">${drawPrev}</div></div>
-          <input type="file" id="p_draw" accept="image/*,application/pdf" style="display:none"></div>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
-      <button class="btn btn-primary" onclick="saveProduct()">${editing?"保存修改":"创建产品"}</button>
-    </div>`;
-  showModal();
-  // 绑定文件输入
-  $("#p_img").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;compressFile(f,1000,r=>{form.image=r;if(r)$("#imgPrev").innerHTML=r.kind==="pdf"?`<span class="lnk">📄 ${esc(r.name)}</span>`:`<img src="${r.data}">`;});});
-  $("#p_draw").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;compressFile(f,1200,r=>{form.drawing=r;if(r)$("#drawPrev").innerHTML=r.kind==="pdf"?`<span class="lnk">📄 ${esc(r.name)}</span>`:`<img src="${r.data}">`;});});
-}
-function pickImg(){ $("#p_img").click(); }
-function pickDraw(){ $("#p_draw").click(); }
-function saveProduct(){
-  const name=$("#p_name").value.trim();
-  const sid=$("#p_sid").value;
-  if(!name){ toast("请填写产品名"); return; }
-  if(!sid){ toast("请选择关联工厂"); return; }
-  const data={
-    productId:$("#p_pid").value.trim(), supplierId:sid, name,
-    model:$("#p_model").value.trim(), size:$("#p_size").value.trim(),
-    material:$("#p_material").value.trim(), surface:$("#p_surface").value.trim(),
-    market:$("#p_market").value.trim(), moq:$("#p_moq").value.trim(), priceRange:$("#p_price").value.trim(),
-    image:form.image||null, drawing:form.drawing||null
-  };
-  let arr=loadProducts();
-  const i=arr.findIndex(p=>p.productId===data.productId);
-  if(i>=0) arr[i]=data; else arr.push(data);
-  saveProducts(arr);
-  closeModal(); toast(i>=0?"产品已更新":"产品已创建："+data.productId); pushSnapshot(); render();
-}
-function delProduct(id){
-  confirmBox(`确定删除产品 <b>${id}</b> 吗？`,()=>{
-    saveProducts(loadProducts().filter(p=>p.productId!==id));
-    closeModal(); toast("产品已删除"); pushSnapshot(); render();
-  });
-}
-
-/* ============================================================
-   模态框 / 确认框 基础
-   ============================================================ */
-function showModal(){ $("#overlay").classList.add("show"); }
-function closeModal(){ $("#overlay").classList.remove("show"); }
-$("#overlay").addEventListener("click",e=>{ if(e.target.id==="overlay") closeModal(); });
-function confirmBox(html,onYes){
-  const m=$("#modal"); m.className="modal";
-  m.innerHTML=`<div class="modal-head"><h3>请确认</h3><span class="x" onclick="closeModal()">×</span></div>
-    <div class="modal-body" style="font-size:14px;line-height:1.7">${html}</div>
-    <div class="modal-foot"><button class="btn btn-ghost" onclick="closeModal()">取消</button>
-    <button class="btn btn-danger" id="cfmYes">确认删除</button></div>`;
-  showModal();
-  $("#cfmYes").onclick=onYes;
-}
-
-/* ============================================================
-   导入 / 导出
-   ============================================================ */
-function exportData(){
-  const data={factories:loadFactories(),products:loadProducts(),_export:"TBD Hardware B2B AI System V1.0",_at:new Date().toISOString()};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
-  a.download="TBD_B2B_备份_"+new Date().toISOString().slice(0,10)+".json";a.click();
-  toast("数据已导出");
-}
-function importData(file){
-  const r=new FileReader();
-  r.onload=e=>{try{
-    const d=JSON.parse(e.target.result);
-    if(!d.factories||!d.products) throw 0;
-    if(!confirm("导入将覆盖当前全部工厂与产品数据，确定继续？")) return;
-    saveFactories(d.factories); saveProducts(d.products);
-    toast("导入成功"); pushSnapshot(); render();
-  }catch(err){ toast("文件格式不正确"); }};
-  r.readAsText(file);
-}
-
-/* 启动：先本地种入示例，再与云端同步（服务器为唯一真相源，跨设备一致） */
 seedIfEmpty();
-(async()=>{ await pullSnapshot(); go("factory"); })();
+go("dashboard");
+
+function dataSig(){ return COLS.map(c=>JSON.stringify(rd(c,c==="settings"?{}:[]))).join("|"); }
+setSync("syncing");
+(async()=>{
+  const before=dataSig();
+  await pullSnapshot();
+  if(dataSig()!==before) render();      // 云端拉到更完整数据 → 就地刷新，不打断用户所在页面
+})();
+
 </script>
 </body>
 </html>

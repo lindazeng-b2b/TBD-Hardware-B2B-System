@@ -14,6 +14,12 @@ const PORT = process.env.PORT || 8787;
 app.use(express.json({ limit: "60mb" })); // 产品图片以 base64 内嵌，需放宽体积
 
 /* ---------- 存储后端 ---------- */
+/* 全量快照包含 10 张表：
+   factory / product / featured / kb / lead / contact / crm / task / email / act + settings */
+const ALL_KEYS=["factory","product","featured","kb","lead","contact","crm","task","email","act"];
+function emptyState(){
+  const s={}; ALL_KEYS.forEach(k=>{ s[k]=[]; }); s.settings={}; return s;
+}
 let pool = null;
 if (process.env.DATABASE_URL) {
   const { Pool } = require("pg");
@@ -37,14 +43,15 @@ const DATA_FILE = path.join(__dirname, "data", "snapshot.json");
 fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
 
 async function readStore() {
+  let s = emptyState();
   if (pool) {
     const r = await pool.query("SELECT data FROM tbd_state WHERE id='main'");
-    return r.rows[0]?.data || { factories: [], products: [] };
+    return Object.assign(s, r.rows[0]?.data || {});
   }
   try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+    return Object.assign(s, JSON.parse(fs.readFileSync(DATA_FILE, "utf8")));
   } catch (e) {
-    return { factories: [], products: [] };
+    return s;
   }
 }
 async function writeStore(d) {
@@ -67,9 +74,16 @@ app.get("/api/snapshot", async (req, res) => {
 
 app.post("/api/snapshot", async (req, res) => {
   const d = req.body;
-  if (!d || !Array.isArray(d.factories) || !Array.isArray(d.products)) {
-    return res.status(400).json({ error: "invalid payload" });
-  }
+  if (!d || typeof d !== "object") return res.status(400).json({ error: "invalid payload" });
+  /* 兼容旧格式：factories / products → factory / product */
+  if (!Array.isArray(d.factory) && Array.isArray(d.factories)) d.factory = d.factories;
+  if (!Array.isArray(d.product) && Array.isArray(d.products))  d.product = d.products;
+  let bad = null;
+  ALL_KEYS.forEach((k) => {
+    const required = (k === "factory" || k === "product");
+    if (!Array.isArray(d[k])) { if (required) bad = k; else d[k] = []; }
+  });
+  if (bad) return res.status(400).json({ error: "invalid payload: " + bad });
   try { await writeStore(d); res.json({ ok: true, at: new Date().toISOString() }); }
   catch (e) { res.status(500).json({ error: String(e) }); }
 });
